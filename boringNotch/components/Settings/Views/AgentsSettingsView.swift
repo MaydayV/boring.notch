@@ -118,7 +118,7 @@ struct AgentsSettingsView: View {
                         if isPreparingDiagnostics {
                             ProgressView()
                         } else {
-                            Label("Copy diagnostics", systemImage: "doc.on.doc")
+                            Label(AgentLocalization.text("agents.settings.diagnostics.copy"), systemImage: "doc.on.doc")
                         }
                     }
                     .buttonStyle(.bordered)
@@ -129,16 +129,16 @@ struct AgentsSettingsView: View {
                             await exportDiagnosticsReport()
                         }
                     } label: {
-                        Label("Export JSON", systemImage: "square.and.arrow.up")
+                        Label(AgentLocalization.text("agents.settings.diagnostics.export_json"), systemImage: "square.and.arrow.up")
                     }
                     .buttonStyle(.bordered)
                     .disabled(isPreparingDiagnostics)
                 }
             } header: {
-                Text("Diagnostics")
+                Text(AgentLocalization.text("agents.settings.diagnostics.section"))
             } footer: {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Export hook/session/action diagnostics for troubleshooting and issue reports.")
+                    Text(AgentLocalization.text("agents.settings.diagnostics.help"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     if let diagnosticsStatusMessage {
@@ -449,7 +449,7 @@ struct AgentsSettingsView: View {
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text("Path")
+            Text(AgentLocalization.text("agents.settings.path"))
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
 
@@ -474,7 +474,7 @@ struct AgentsSettingsView: View {
                 .foregroundStyle(.secondary)
                 .textSelection(.enabled)
 
-            Text("Operation")
+            Text(AgentLocalization.text("agents.settings.operation"))
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
 
@@ -845,18 +845,18 @@ struct AgentsSettingsView: View {
 
     private func hookConfigPath(for provider: AgentProvider, status: AgentHookProviderStatus?) -> String {
         if let configPath = status?.configPath.trimmedNonEmpty {
-            return "Config path: \(configPath)"
+            return AgentLocalization.format("agents.settings.config_path_format", configPath)
         }
 
         guard let defaultConfigURL = AgentRuntimePaths.defaultHookConfigURL(for: provider) else {
-            return "Config path: unavailable"
+            return AgentLocalization.text("agents.settings.config_path_unavailable")
         }
-        return "Config path: \(defaultConfigURL.path)"
+        return AgentLocalization.format("agents.settings.config_path_format", defaultConfigURL.path)
     }
 
     private func statusContextLabel(status: AgentHookProviderStatus?) -> String {
         let supportState = status?.supportState ?? .notInstalled
-        return "Status: \(statusLabel(for: supportState))"
+        return AgentLocalization.format("agents.settings.status_format", statusLabel(for: supportState))
     }
 
     private func hookInstallMessage(base: String, statuses: [AgentHookProviderStatus], limit: Int) -> String {
@@ -873,7 +873,7 @@ struct AgentsSettingsView: View {
     }
 
     private func diagnosticSummary(for status: AgentHookProviderStatus) -> String {
-        let configPath = status.configPath.trimmedNonEmpty ?? "unavailable"
+        let configPath = status.configPath.trimmedNonEmpty ?? AgentLocalization.text("agents.settings.unavailable")
         return "\(status.provider.displayName): \(statusLabel(for: status.supportState)) • \(configPath)"
     }
 
@@ -890,7 +890,7 @@ struct AgentsSettingsView: View {
                 throw NSError(
                     domain: "boringNotch.agents.diagnostics",
                     code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Failed to encode diagnostics as UTF-8 text."]
+                    userInfo: [NSLocalizedDescriptionKey: AgentLocalization.text("agents.settings.diagnostics.encode_utf8_failed")]
                 )
             }
 
@@ -900,13 +900,16 @@ struct AgentsSettingsView: View {
 
             await MainActor.run {
                 diagnosticsStatusMessage = copied
-                    ? "Diagnostics copied to clipboard."
-                    : "Failed to copy diagnostics to clipboard."
+                    ? AgentLocalization.text("agents.settings.diagnostics.copy_success")
+                    : AgentLocalization.text("agents.settings.diagnostics.copy_failed")
                 isPreparingDiagnostics = false
             }
         } catch {
             await MainActor.run {
-                diagnosticsStatusMessage = "Copy diagnostics failed: \(error.localizedDescription)"
+                diagnosticsStatusMessage = AgentLocalization.format(
+                    "agents.settings.diagnostics.copy_failed_format",
+                    error.localizedDescription
+                )
                 isPreparingDiagnostics = false
             }
         }
@@ -924,8 +927,8 @@ struct AgentsSettingsView: View {
 
             let targetURL = await MainActor.run { () -> URL? in
                 let panel = NSSavePanel()
-                panel.title = "Export Agent Diagnostics"
-                panel.prompt = "Export"
+                panel.title = AgentLocalization.text("agents.settings.diagnostics.export_title")
+                panel.prompt = AgentLocalization.text("agents.settings.diagnostics.export_prompt")
                 panel.nameFieldStringValue = defaultDiagnosticsFileName(payload.generatedAt)
                 panel.allowedFileTypes = ["json"]
                 panel.canCreateDirectories = true
@@ -936,7 +939,7 @@ struct AgentsSettingsView: View {
 
             guard let targetURL else {
                 await MainActor.run {
-                    diagnosticsStatusMessage = "Diagnostics export canceled."
+                    diagnosticsStatusMessage = AgentLocalization.text("agents.settings.diagnostics.export_cancelled")
                     isPreparingDiagnostics = false
                 }
                 return
@@ -944,12 +947,18 @@ struct AgentsSettingsView: View {
 
             try data.write(to: targetURL, options: .atomic)
             await MainActor.run {
-                diagnosticsStatusMessage = "Diagnostics exported to \(targetURL.lastPathComponent)."
+                diagnosticsStatusMessage = AgentLocalization.format(
+                    "agents.settings.diagnostics.export_success_format",
+                    targetURL.lastPathComponent
+                )
                 isPreparingDiagnostics = false
             }
         } catch {
             await MainActor.run {
-                diagnosticsStatusMessage = "Export diagnostics failed: \(error.localizedDescription)"
+                diagnosticsStatusMessage = AgentLocalization.format(
+                    "agents.settings.diagnostics.export_failed_format",
+                    error.localizedDescription
+                )
                 isPreparingDiagnostics = false
             }
         }

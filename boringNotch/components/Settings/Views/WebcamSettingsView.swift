@@ -23,7 +23,7 @@ struct MirrorSettings: View {
                 .disabled(!checkVideoInput())
 
                 Defaults.Toggle(key: .isMirrored) {
-                    Text("Mirror video")
+                    Text("settings.webcam.toggle.mirror_video")
                 }
                 .disabled(!showMirror || !checkVideoInput())
 

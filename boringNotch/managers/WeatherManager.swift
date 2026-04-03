@@ -36,7 +36,11 @@ struct WeatherSnapshot {
 
     var precipitationText: String? {
         guard let precipitationProbability else { return nil }
-        return "Rain \(Int(precipitationProbability.rounded()))%"
+        return l10nFormat(
+            "weather_tab.rain_value_format",
+            fallback: "Rain %d%%",
+            Int(precipitationProbability.rounded())
+        )
     }
 
     var feelsLikeText: String? {

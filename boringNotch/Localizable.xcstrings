@@ -23163,6 +23163,310 @@
         }
       }
     }, 
+    "agents.settings.config_path_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Config path: %@"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "配置路径：%@"
+          }
+        }
+      }
+    }, 
+    "agents.settings.config_path_unavailable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Config path: unavailable"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "配置路径：不可用"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.copy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Copy diagnostics"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "复制诊断"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.copy_failed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Failed to copy diagnostics to clipboard."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "复制诊断信息到剪贴板失败。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.copy_failed_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Copy diagnostics failed: %@"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "复制诊断信息失败：%@"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.copy_success": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Diagnostics copied to clipboard."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "诊断信息已复制到剪贴板。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.encode_utf8_failed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Failed to encode diagnostics as UTF-8 text."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "无法将诊断信息编码为 UTF-8 文本。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_cancelled": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Diagnostics export canceled."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "已取消导出诊断信息。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_failed_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Export diagnostics failed: %@"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "导出诊断信息失败：%@"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_json": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Export JSON"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "导出 JSON"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_prompt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Export"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "导出"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_success_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Diagnostics exported to %@."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "诊断信息已导出到 %@。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.export_title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Export Agent Diagnostics"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "导出 Agent 诊断信息"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.help": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Export hook/session/action diagnostics for troubleshooting and issue reports."
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "导出 hook/session/action 诊断信息，用于排查问题和提交反馈。"
+          }
+        }
+      }
+    }, 
+    "agents.settings.diagnostics.section": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Diagnostics"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "诊断"
+          }
+        }
+      }
+    }, 
+    "agents.settings.operation": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Operation"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "操作"
+          }
+        }
+      }
+    }, 
+    "agents.settings.path": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Path"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "路径"
+          }
+        }
+      }
+    }, 
+    "agents.settings.status_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Status: %@"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "状态：%@"
+          }
+        }
+      }
+    }, 
+    "agents.settings.unavailable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "unavailable"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "不可用"
+          }
+        }
+      }
+    }, 
     "agents.status.completed": {
       "localizations": {
         "en": {
@@ -27387,6 +27691,22 @@
         }
       }
     }, 
+    "settings.webcam.toggle.mirror_video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Mirror video"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "镜像视频"
+          }
+        }
+      }
+    }, 
     "settings.window.title": {
       "localizations": {
         "en": {
@@ -27399,6 +27719,358 @@
           "stringUnit": {
             "state": "translated", 
             "value": "OpenIsland 设置"
+          }
+        }
+      }
+    }, 
+    "weather_condition_clear": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Clear"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "晴朗"
+          }
+        }
+      }
+    }, 
+    "weather_condition_cloudy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Cloudy"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "多云"
+          }
+        }
+      }
+    }, 
+    "weather_condition_drizzle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Drizzle"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "毛毛雨"
+          }
+        }
+      }
+    }, 
+    "weather_condition_fog": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Fog"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "雾"
+          }
+        }
+      }
+    }, 
+    "weather_condition_freezing_drizzle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Freezing drizzle"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "冻毛毛雨"
+          }
+        }
+      }
+    }, 
+    "weather_condition_freezing_rain": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Freezing rain"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "冻雨"
+          }
+        }
+      }
+    }, 
+    "weather_condition_mainly_clear": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Mainly clear"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "基本晴朗"
+          }
+        }
+      }
+    }, 
+    "weather_condition_partly_cloudy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Partly cloudy"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "局部多云"
+          }
+        }
+      }
+    }, 
+    "weather_condition_rain": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Rain"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "雨"
+          }
+        }
+      }
+    }, 
+    "weather_condition_rain_showers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Rain showers"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "阵雨"
+          }
+        }
+      }
+    }, 
+    "weather_condition_snow": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Snow"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "雪"
+          }
+        }
+      }
+    }, 
+    "weather_condition_snow_showers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Snow showers"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "阵雪"
+          }
+        }
+      }
+    }, 
+    "weather_condition_thunderstorm": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Thunderstorm"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "雷暴"
+          }
+        }
+      }
+    }, 
+    "weather_condition_thunderstorm_hail": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Thunderstorm with hail"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "雷暴伴冰雹"
+          }
+        }
+      }
+    }, 
+    "weather_condition_unknown": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Unknown"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "未知"
+          }
+        }
+      }
+    }, 
+    "weather_error_location_not_found": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Location not found"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "未找到该地点"
+          }
+        }
+      }
+    }, 
+    "weather_error_service_unavailable_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Weather service unavailable (%d)"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "天气服务不可用（%d）"
+          }
+        }
+      }
+    }, 
+    "weather_error_unavailable": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Weather unavailable"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "天气服务不可用"
+          }
+        }
+      }
+    }, 
+    "weather_relative_day_format": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Day %d"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "第 %d 天"
+          }
+        }
+      }
+    }, 
+    "weather_relative_now": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Now"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "现在"
+          }
+        }
+      }
+    }, 
+    "weather_relative_today": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Today"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "今天"
+          }
+        }
+      }
+    }, 
+    "weather_relative_tomorrow": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "Tomorrow"
+          }
+        }, 
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated", 
+            "value": "明天"
           }
         }
       }
