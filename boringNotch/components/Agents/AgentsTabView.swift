@@ -62,6 +62,28 @@ struct AgentsTabView: View {
         manager.pendingActions.filter { enabledProviders.contains($0.provider) }
     }
 
+    private var fallbackRecentSessions: [AgentSessionMeta] {
+        let recentWindow: TimeInterval = 60 * 60 * 24 * 2
+        let now = Date()
+        return visibleSessions
+            .filter { now.timeIntervalSince($0.lastActiveAt) <= recentWindow }
+            .sorted { lhs, rhs in
+                if lhs.lastActiveAt == rhs.lastActiveAt {
+                    return lhs.createdAt > rhs.createdAt
+                }
+                return lhs.lastActiveAt > rhs.lastActiveAt
+            }
+            .prefix(20)
+            .map { $0 }
+    }
+
+    private var sessionsForDisplay: [AgentSessionMeta] {
+        if !visibleActiveSessions.isEmpty || !visiblePendingActions.isEmpty {
+            return visibleActiveSessions
+        }
+        return fallbackRecentSessions
+    }
+
     private var deniedProviders: [AgentProvider] {
         let providers = manager.scanDeniedRoots
             .map(\.provider)
@@ -95,7 +117,7 @@ struct AgentsTabView: View {
     }
 
     private var sortedSnapshots: [SessionSnapshot] {
-        visibleActiveSessions
+        sessionsForDisplay
             .map { makeSnapshot(for: $0) }
             .sorted { lhs, rhs in
                 if lhs.sortRank != rhs.sortRank {

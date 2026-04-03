@@ -126,10 +126,17 @@ struct ContentView: View {
     }
 
     private var compactAgentSnapshot: CompactAgentScopeSnapshot? {
-        let activeSessions = agentHubManager.sessions.filter { isAgentStateActive($0.state) }
+        let allSessions = agentHubManager.sessions
+        let activeSessions = allSessions.filter { isAgentStateActive($0.state) }
         let pendingActions = agentHubManager.pendingActions
+        let recentWindow: TimeInterval = 60 * 60 * 24
+        let now = Date()
+        let recentSession = allSessions
+            .filter { now.timeIntervalSince($0.lastActiveAt) <= recentWindow }
+            .sorted(by: { $0.lastActiveAt > $1.lastActiveAt })
+            .first
 
-        guard !activeSessions.isEmpty || !pendingActions.isEmpty else {
+        guard !activeSessions.isEmpty || !pendingActions.isEmpty || recentSession != nil else {
             return nil
         }
 
@@ -142,9 +149,11 @@ struct ContentView: View {
 
         let preferredProvider = preferredPendingAction?.provider
             ?? preferredActiveSession?.provider
+            ?? recentSession?.provider
             ?? .codex
         let preferredSourceAlias = preferredPendingAction?.sourceAlias?.trimmedNonEmpty
             ?? preferredActiveSession?.sourceAlias?.trimmedNonEmpty
+            ?? recentSession?.sourceAlias?.trimmedNonEmpty
 
         let providerActiveCount = activeSessions.filter { session in
             matchesCompactScope(
