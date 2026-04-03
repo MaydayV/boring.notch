@@ -40,7 +40,7 @@ struct CheckForUpdatesView: View {
     }
     
     var body: some View {
-        Button("Check for Updates…", action: updater.checkForUpdates)
+        Button("settings.updater.button.check_for_updates", action: updater.checkForUpdates)
             .disabled(!checkForUpdatesViewModel.canCheckForUpdates)
     }
 }
@@ -59,36 +59,29 @@ struct UpdaterSettingsView: View {
     }
     
     var body: some View {
-        Section(
-            header: HStack {
-                Text("Software updates")
-            },
-            footer: Text(
-                NSLocalizedString(
-                    "Stable and Beta come from official releases. Dev uses nightly builds from the dev branch.",
-                    comment: "Software updates channel footer"
-                )
-            )
-        ) {
-            Picker(
-                NSLocalizedString("Update channel", comment: "Software updates channel picker label"),
-                selection: $updateChannel
-            ) {
+        Section {
+            Picker("settings.updater.picker.update_channel", selection: $updateChannel) {
                 ForEach(UpdateChannel.allCases) { channel in
                     Text(channel.title).tag(channel)
                 }
             }
 
-            Toggle("Automatically check for updates", isOn: $automaticallyChecksForUpdates)
+            Toggle("settings.updater.toggle.automatically_check_for_updates", isOn: $automaticallyChecksForUpdates)
                 .onChange(of: automaticallyChecksForUpdates) { _, newValue in
                     updater.automaticallyChecksForUpdates = newValue
                 }
-
-            Toggle("Automatically download updates", isOn: $automaticallyDownloadsUpdates)
+            
+            Toggle("settings.updater.toggle.automatically_download_updates", isOn: $automaticallyDownloadsUpdates)
                 .disabled(!automaticallyChecksForUpdates)
                 .onChange(of: automaticallyDownloadsUpdates) { _, newValue in
                     updater.automaticallyDownloadsUpdates = newValue
                 }
+        } header: {
+            HStack {
+                Text("settings.updater.section.software_updates")
+            }
+        } footer: {
+            Text("settings.updater.footer.channel_description")
         }
     }
 }

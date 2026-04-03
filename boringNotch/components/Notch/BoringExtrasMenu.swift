@@ -10,7 +10,7 @@ import SwiftUI
 struct BoringLargeButtons: View {
     var action: () -> Void
     var icon: Image
-    var title: String
+    var title: LocalizedStringKey
     var body: some View {
         Button (
             action:action,
@@ -48,7 +48,7 @@ struct BoringExtrasMenu : View {
                 }
             },
             icon: Image(.github),
-            title: "Checkout"
+            title: "menu.checkout"
         )
     }
     
@@ -61,7 +61,7 @@ struct BoringExtrasMenu : View {
                 VStack(spacing: 8) {
                     Image(systemName: "gear").resizable()
                         .aspectRatio(contentMode: .fit).frame(width:20)
-                    Text("Settings").font(.body)
+                    Text("settings.common.settings").font(.body)
                 }
             }
         }
@@ -76,7 +76,7 @@ struct BoringExtrasMenu : View {
                 }
             },
             icon: Image(systemName: "arrow.down.forward.and.arrow.up.backward"),
-            title: "Hide"
+            title: "menu.hide"
         )
     }
     
@@ -90,7 +90,7 @@ struct BoringExtrasMenu : View {
                 }
             },
             icon: Image(systemName: "xmark"),
-            title: "Exit"
+            title: "settings.common.quit"
         )
     }
 }

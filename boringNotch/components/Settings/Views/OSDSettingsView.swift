@@ -21,60 +21,60 @@ struct OSDSettings: View {
 
     var body: some View {
         Form {
-            Section(header: Text("General")) {
+            Section(header: Text("settings.osd.section.general")) {
                 Defaults.Toggle(key: .osdReplacement) {
-                    Text("Replace System OSD")
+                    Text("settings.osd.toggle.replace_system_osd")
                 }
                 if osdReplacementDefault {
                     Defaults.Toggle(key: .inlineOSD) {
-                        Text("Use inline style")
+                        Text("settings.osd.toggle.use_inline_style")
                     }
                 }
             }
 
             if osdReplacementDefault {
-                Section(header: Text("Control Sources"), footer: Text("Select which provider to use for system controls. BetterDisplay and Lunar require their respective apps to be installed and running.")) {
+                Section(header: Text("settings.osd.section.control_sources"), footer: Text("settings.osd.footer.control_sources")) {
                     HStack {
-                        Text("Brightness Source")
+                        Text("settings.osd.label.brightness_source")
                         Spacer()
                         Picker("", selection: $osdBrightnessSourceDefault) {
                             ForEach(OSDControlSource.allCases) { source in
-                                Text(source.localizedString).tag(source)
+                                Text(osdSourceLabel(for: source)).tag(source)
                             }
                         }
                         .pickerStyle(.menu)
                     }
                     if osdBrightnessSourceDefault == .builtin {
-                        HelpText("Only Apple displays are supported. In multi-display setups, the brightness OSD appears on the active display if supported, or on another supported display otherwise.")
+                        HelpText("settings.osd.help.only_apple_displays")
                     }
                     if osdBrightnessSourceDefault == .betterDisplay && !BetterDisplayManager.shared.isBetterDisplayAvailable {
-                        HelpText("BetterDisplay is not installed or not running")
+                        HelpText("settings.osd.help.betterdisplay_unavailable")
                     }
                     if osdBrightnessSourceDefault == .lunar && !LunarManager.shared.isLunarAvailable {
-                        HelpText("Lunar is not installed or not reachable")
+                        HelpText("settings.osd.help.lunar_unavailable")
                     }
 
                     HStack {
-                        Text("Volume Source")
+                        Text("settings.osd.label.volume_source")
                         Spacer()
                         Picker("", selection: $osdVolumeSourceDefault) {
                             // Lunar does not support volume control so hide it from the picker
                             ForEach(OSDControlSource.allCases.filter { $0 != .lunar }) { source in
-                                Text(source.localizedString).tag(source)
+                                Text(osdSourceLabel(for: source)).tag(source)
                             }
                         }
                         .pickerStyle(.menu)
                     }
                     if osdVolumeSourceDefault == .betterDisplay && !BetterDisplayManager.shared.isBetterDisplayAvailable {
-                        HelpText("BetterDisplay is not installed or not running")
+                        HelpText("settings.osd.help.betterdisplay_unavailable")
                     }
 
                     HStack {
-                        Text("Keyboard Source")
+                        Text("settings.osd.label.keyboard_source")
                         Spacer()
-                        Text(OSDControlSource.builtin.localizedString)
+                        Text("settings.osd.source.builtin")
                     }
-                    HelpText("Keyboard brightness currently supports the built-in source only.")
+                    HelpText("settings.osd.help.keyboard_brightness_builtin_only")
                     if !isAccessibilityAuthorized {
                         HStack(alignment: .center, spacing: 12) {
                             Image(systemName: "accessibility")
@@ -82,14 +82,14 @@ struct OSDSettings: View {
                                 .foregroundStyle(Color.effectiveAccent)
                                 
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("Accessibility Access Required")
+                                Text("settings.osd.label.accessibility_access_required")
                                     .font(.headline)
-                                Text("Grant Accessibility access so built-in keyboard brightness controls can be intercepted.")
+                                Text("settings.osd.help.grant_accessibility")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            Button("Grant Access") {
+                            Button("settings.osd.button.grant_access") {
                                 Task {
                                     let granted = await MediaKeyInterceptor.shared.ensureAccessibilityAuthorization(promptIfNeeded: true)
                                     await MainActor.run {
@@ -102,35 +102,35 @@ struct OSDSettings: View {
                     }
                 }
 
-                Section(header: Text("Appearance")) {
+                Section(header: Text("settings.osd.section.appearance")) {
                     Defaults.Toggle(key: .enableGradient) {
-                        Text("Enable gradient")
+                        Text("settings.osd.toggle.enable_gradient")
                     }
                     Defaults.Toggle(key: .systemEventIndicatorShadow) {
-                        Text("Show shadow")
+                        Text("settings.osd.toggle.show_shadow")
                     }
                     Defaults.Toggle(key: .systemEventIndicatorUseAccent) {
-                        Text("Use accent color")
+                        Text("settings.osd.toggle.use_accent_color")
                     }
                 }
 
-                Section(header: Text("Visibility")) {
+                Section(header: Text("settings.osd.section.visibility")) {
                     Defaults.Toggle(key: .showOpenNotchOSD) {
-                        Text("Show OSD in open notch")
+                        Text("settings.osd.toggle.show_osd_in_open_notch")
                     }
                     if showOpenNotchOSDDefault {
                         Defaults.Toggle(key: .showOpenNotchOSDPercentage) {
-                            Text("Show percentage (open notch)")
+                            Text("settings.osd.toggle.show_percentage_open_notch")
                         }
                     }
                     Defaults.Toggle(key: .showClosedNotchOSDPercentage) {
-                        Text("Show percentage (closed notch)")
+                        Text("settings.osd.toggle.show_percentage_closed_notch")
                     }
                 }
 
-                Section(header: Text("Interaction")) {
+                Section(header: Text("settings.osd.section.interaction")) {
                     HStack {
-                        Text("Option (⌥) Key Behavior")
+                        Text("settings.osd.label.option_key_behavior")
                         Spacer()
                         Picker("", selection: $optionKeyActionDefault) {
                             ForEach(OptionKeyAction.allCases) { action in
@@ -139,7 +139,7 @@ struct OSDSettings: View {
                         }
                         .pickerStyle(.menu)
                     }
-                    HelpText("Define what happens when you hold the Option key while pressing media keys.")
+                    HelpText("settings.osd.help.define_option_key_behavior")
                 }
             }
 
@@ -168,6 +168,17 @@ struct OSDSettings: View {
             }
         }
 
+    }
+
+    private func osdSourceLabel(for source: OSDControlSource) -> LocalizedStringKey {
+        switch source {
+        case .builtin:
+            return "settings.osd.source.builtin"
+        case .betterDisplay:
+            return "settings.osd.source.betterdisplay"
+        case .lunar:
+            return "settings.osd.source.lunar"
+        }
     }
 }
 

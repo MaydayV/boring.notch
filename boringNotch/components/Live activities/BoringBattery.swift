@@ -146,7 +146,7 @@ struct BatteryMenuView: View {
             Divider().background(Color.white)
 
             Button(action: openBatteryPreferences) {
-                Label("Battery Settings", systemImage: "gearshape")
+                Label("settings.battery.button.battery_settings", systemImage: "gearshape")
                     .fontWeight(.regular)
             }
             .frame(maxWidth: .infinity)

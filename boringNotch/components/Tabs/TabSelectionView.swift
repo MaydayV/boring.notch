@@ -20,12 +20,13 @@ struct TabSelectionView: View {
     @StateObject private var shelfState = ShelfStateViewModel.shared
     @Default(.showWeather) private var showWeather
     @Default(.boringShelf) private var showShelf
+    @Default(.showAgentsTab) private var showAgentsTab
     @Namespace var animation
 
     private var tabs: [TabModel] {
         var visibleTabs: [TabModel] = [
             TabModel(
-                label: "Home",
+                label: AgentLocalization.text("app.tab.home"),
                 icon: "house.fill",
                 view: .home
             )
@@ -34,7 +35,7 @@ struct TabSelectionView: View {
         if showWeather {
             visibleTabs.append(
                 TabModel(
-                    label: "Weather",
+                    label: AgentLocalization.text("app.tab.weather"),
                     icon: "cloud.sun.fill",
                     view: .weather
                 )
@@ -44,9 +45,19 @@ struct TabSelectionView: View {
         if showShelf && (!shelfState.isEmpty || coordinator.alwaysShowTabs) {
             visibleTabs.append(
                 TabModel(
-                    label: "Shelf",
+                    label: AgentLocalization.text("app.tab.shelf"),
                     icon: "tray.fill",
                     view: .shelf
+                )
+            )
+        }
+
+        if showAgentsTab {
+            visibleTabs.append(
+                TabModel(
+                    label: AgentLocalization.text("app.tab.agents"),
+                    icon: "terminal.fill",
+                    view: .agents
                 )
             )
         }
@@ -78,6 +89,11 @@ struct TabSelectionView: View {
             }
         }
         .clipShape(Capsule())
+        .onChange(of: showAgentsTab) {
+            if !showAgentsTab, coordinator.currentView == .agents {
+                coordinator.currentView = .home
+            }
+        }
     }
 }
 

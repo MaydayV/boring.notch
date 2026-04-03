@@ -15,6 +15,7 @@ struct BoringHeader: View {
     @StateObject var tvm = ShelfStateViewModel.shared
     @Default(.boringShelf) private var showShelf
     @Default(.showWeather) private var showWeather
+    @Default(.showAgentsTab) private var showAgentsTab
 
     private var shouldShowShelfTab: Bool {
         showShelf && (!tvm.isEmpty || coordinator.alwaysShowTabs)
@@ -24,8 +25,12 @@ struct BoringHeader: View {
         showWeather
     }
 
+    private var shouldShowAgentsTab: Bool {
+        showAgentsTab
+    }
+
     private var shouldShowTabs: Bool {
-        shouldShowShelfTab || shouldShowWeatherTab
+        shouldShowShelfTab || shouldShowWeatherTab || shouldShowAgentsTab
     }
 
     var body: some View {

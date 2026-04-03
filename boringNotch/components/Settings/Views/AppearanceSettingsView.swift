@@ -5,11 +5,13 @@
 //  Created by Richard Kunkli on 07/08/2024.
 //
 
+import AVFoundation
 import Defaults
 import SwiftUI
 
 struct Appearance: View {
     @ObservedObject var coordinator = BoringViewCoordinator.shared
+    @Default(.mirrorShape) var mirrorShape
     @Default(.sliderColor) var sliderColor
 
     let icons: [String] = ["logo2"]
@@ -17,44 +19,65 @@ struct Appearance: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Always show tabs", isOn: $coordinator.alwaysShowTabs)
+                Toggle("settings.appearance.toggle.always_show_tabs", isOn: $coordinator.alwaysShowTabs)
                 Defaults.Toggle(key: .settingsIconInNotch) {
-                    Text("Show settings icon in notch")
+                    Text("settings.appearance.toggle.show_settings_icon_in_notch")
                 }
 
             } header: {
-                Text("General")
+                Text("settings.appearance.section.general")
             }
 
             Section {
                 Defaults.Toggle(key: .coloredSpectrogram) {
-                    Text("Colored spectrogram")
+                    Text("settings.appearance.toggle.colored_spectrogram")
                 }
                 Defaults.Toggle(key: .playerColorTinting) {
-                    Text("Player tinting")
+                    Text("settings.appearance.toggle.player_tinting")
                 }
                 Defaults.Toggle(key: .lightingEffect) {
-                    Text("Enable blur effect behind album art")
+                    Text("settings.appearance.toggle.enable_blur_effect_behind_album_art")
                 }
-                Picker("Slider color", selection: $sliderColor) {
+                Picker("settings.appearance.picker.slider_color", selection: $sliderColor) {
                     ForEach(SliderColorEnum.allCases, id: \.self) { option in
                         Text(option.localizedString)
                     }
                 }
             } header: {
-                Text("Media")
+                Text("settings.appearance.section.media")
             }
+
+
+
             Section {
+                Defaults.Toggle(key: .showMirror) {
+                    Text("settings.appearance.toggle.enable_boring_mirror")
+                }
+                    .disabled(!checkVideoInput())
+                Picker("settings.appearance.picker.mirror_shape", selection: $mirrorShape) {
+                    Text("settings.appearance.option.circle")
+                        .tag(MirrorShapeEnum.circle)
+                    Text("settings.appearance.option.square")
+                        .tag(MirrorShapeEnum.rectangle)
+                }
                 Defaults.Toggle(key: .showNotHumanFace) {
-                    Text("Show cool face animation while inactive")
+                    Text("settings.appearance.toggle.show_cool_face_animation_while_inactive")
                 }
             } header: {
                 HStack {
-                    Text("Additional features")
+                    Text("settings.appearance.section.additional_features")
                 }
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Appearance")
+        .navigationTitle("settings.sidebar.appearance")
+    }
+
+    func checkVideoInput() -> Bool {
+        if AVCaptureDevice.default(for: .video) != nil {
+            return true
+        }
+
+        return false
     }
 }

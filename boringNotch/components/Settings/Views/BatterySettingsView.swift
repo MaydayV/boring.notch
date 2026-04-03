@@ -13,23 +13,23 @@ struct Charge: View {
         Form {
             Section {
                 Defaults.Toggle(key: .showBatteryIndicator) {
-                    Text("Show battery indicator")
+                    Text("settings.battery.toggle.show_battery_indicator")
                 }
                 Defaults.Toggle(key: .showPowerStatusNotifications) {
-                    Text("Show power status notifications")
+                    Text("settings.battery.toggle.show_power_status_notifications")
                 }
             } header: {
-                Text("General")
+                Text("settings.battery.section.general")
             }
             Section {
                 Defaults.Toggle(key: .showBatteryPercentage) {
-                    Text("Show battery percentage")
+                    Text("settings.battery.toggle.show_battery_percentage")
                 }
                 Defaults.Toggle(key: .showPowerStatusIcons) {
-                    Text("Show power status icons")
+                    Text("settings.battery.toggle.show_power_status_icons")
                 }
             } header: {
-                Text("Battery Information")
+                Text("settings.battery.section.battery_information")
             }
         }
         .onAppear {
@@ -38,6 +38,6 @@ struct Charge: View {
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Battery")
+        .navigationTitle("settings.sidebar.battery")
     }
 }

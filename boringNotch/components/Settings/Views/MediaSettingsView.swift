@@ -6,6 +6,7 @@
 //
 
 import Defaults
+import Foundation
 import SwiftUI
 
 struct Media: View {
@@ -17,18 +18,13 @@ struct Media: View {
     @Default(.sneakPeekStyles) var sneakPeekStyles
 
     @Default(.enableLyrics) var enableLyrics
-    @Default(.musicPlayerVisibilityMode) private var musicPlayerVisibilityMode
-    
-    private var areMusicControlsDisabled: Bool {
-        musicPlayerVisibilityMode == .never
-    }
 
     var body: some View {
         Form {
             Section {
-                Picker("Music Source", selection: $mediaController) {
+                Picker("settings.media.picker.music_source", selection: $mediaController) {
                     ForEach(availableMediaControllers) { controller in
-                        Text(controller.localizedString).tag(controller)
+                        Text(mediaControllerLabel(for: controller)).tag(controller)
                     }
                 }
                 .onChange(of: mediaController) { _, _ in
@@ -38,11 +34,11 @@ struct Media: View {
                     )
                 }
             } header: {
-                Text("Media Source")
+                Text("settings.media.section.media_source")
             } footer: {
                 if MusicManager.shared.isNowPlayingDeprecated {
                     HStack {
-                        Text("YouTube Music requires this third-party app to be installed: ")
+                        Text("settings.media.footer.youtube_music_requires_app")
                             .foregroundStyle(.secondary)
                             .font(.caption)
                         Link(
@@ -53,9 +49,7 @@ struct Media: View {
                         .foregroundColor(.blue)  // Ensures it's visibly a link
                     }
                 } else {
-                    Text(
-                        "'Now Playing' was the only option on previous versions and works with all media apps."
-                    )
+                    Text("settings.media.footer.now_playing_legacy")
                     .foregroundStyle(.secondary)
                     .font(.caption)
                 }
@@ -63,11 +57,11 @@ struct Media: View {
             
             Section {
                 Toggle(
-                    "Show music live activity",
+                    "settings.media.toggle.show_music_live_activity",
                     isOn: $coordinator.musicLiveActivityEnabled.animation()
                 )
-                Toggle("Show sneak peek on playback changes", isOn: $enableSneakPeek)
-                Picker("Sneak Peek Style", selection: $sneakPeekStyles) {
+                Toggle("settings.media.toggle.show_sneak_peek_on_playback_changes", isOn: $enableSneakPeek)
+                Picker("settings.media.picker.sneak_peek_style", selection: $sneakPeekStyles) {
                     ForEach(SneakPeekStyle.allCases) { style in
                         Text(style.localizedString).tag(style)
                     }
@@ -75,9 +69,9 @@ struct Media: View {
                 HStack {
                     Stepper(value: $waitInterval, in: 0...10, step: 1) {
                         HStack {
-                            Text("Media inactivity timeout")
+                            Text("settings.media.label.media_inactivity_timeout")
                             Spacer()
-                            Text("\(Defaults[.waitInterval], specifier: "%.0f") seconds")
+                            Text(String(format: String(localized: "settings.media.value.media_inactivity_timeout_format"), locale: .current, arguments: [Int(waitInterval)]))
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -86,46 +80,37 @@ struct Media: View {
                     selection: $hideNotchOption,
                     label:
                         HStack {
-                            Text("Full screen behavior")
-                            customBadge(text: "Beta")
+                            Text("settings.media.label.full_screen_behavior")
+                            customBadge(text: "settings.common.beta")
                         }
                 ) {
-                    Text("Hide for all apps").tag(HideNotchOption.always)
-                    Text("Hide for media app only").tag(
+                    Text("settings.media.option.hide_for_all_apps").tag(HideNotchOption.always)
+                    Text("settings.media.option.hide_for_media_app_only").tag(
                         HideNotchOption.nowPlayingOnly)
-                    Text("Never hide").tag(HideNotchOption.never)
+                    Text("settings.media.option.never_hide").tag(HideNotchOption.never)
                 }
             } header: {
-                Text("Media playback live activity")
+                Text("settings.media.section.media_playback_live_activity")
             }
             
             Section {
-                Picker("Open-notch music player", selection: $musicPlayerVisibilityMode) {
-                    ForEach(MusicPlayerVisibilityMode.allCases) { mode in
-                        Text(mode.rawValue).tag(mode)
-                    }
-                }
                 MusicSlotConfigurationView()
-                    .disabled(areMusicControlsDisabled)
-                    .opacity(areMusicControlsDisabled ? 0.5 : 1)
                 Defaults.Toggle(key: .enableLyrics) {
                     HStack {
-                        Text("Show lyrics below artist name")
-                        customBadge(text: "Beta")
+                        Text("settings.media.toggle.show_lyrics_below_artist_name")
+                        customBadge(text: "settings.common.beta")
                     }
                 }
-                .disabled(areMusicControlsDisabled)
-                .opacity(areMusicControlsDisabled ? 0.5 : 1)
             } header: {
-                Text("Media controls")
+                Text("settings.media.section.media_controls")
             }  footer: {
-                Text("Choose when the open-notch music player appears. Volume expands when active.")
+                Text("settings.media.footer.customize_controls")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Media")
+        .navigationTitle("settings.sidebar.media")
     }
 
     // Only show controller options that are available on this macOS version
@@ -134,6 +119,19 @@ struct Media: View {
             return MediaControllerType.allCases.filter { $0 != .nowPlaying }
         } else {
             return MediaControllerType.allCases
+        }
+    }
+
+    private func mediaControllerLabel(for controller: MediaControllerType) -> LocalizedStringKey {
+        switch controller {
+        case .nowPlaying:
+            return "settings.media.option.now_playing"
+        case .appleMusic:
+            return "settings.media.option.apple_music"
+        case .spotify:
+            return "settings.media.option.spotify"
+        case .youtubeMusic:
+            return "settings.media.option.youtube_music"
         }
     }
 }

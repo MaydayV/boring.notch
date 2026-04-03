@@ -19,27 +19,27 @@ struct CalendarSettings: View {
     var body: some View {
         Form {
             Defaults.Toggle(key: .showCalendar) {
-                Text("Show calendar")
+                Text("settings.calendar.toggle.show_calendar")
             }
             Defaults.Toggle(key: .hideCompletedReminders) {
-                Text("Hide completed reminders")
+                Text("settings.calendar.toggle.hide_completed_reminders")
             }
             Defaults.Toggle(key: .hideAllDayEvents) {
-                Text("Hide all-day events")
+                Text("settings.calendar.toggle.hide_all_day_events")
             }
             Defaults.Toggle(key: .autoScrollToNextEvent) {
-                Text("Auto-scroll to next event")
+                Text("settings.calendar.toggle.auto_scroll_to_next_event")
             }
             Defaults.Toggle(key: .showFullEventTitles) {
-                Text("Always show full event titles")
+                Text("settings.calendar.toggle.always_show_full_event_titles")
             }
-            Section(header: Text("Calendars")) {
+            Section(header: Text("settings.calendar.section.calendars")) {
                 if calendarManager.calendarAuthorizationStatus != .fullAccess {
-                    Text("Calendar access is denied. Please enable it in System Settings.")
+                    Text("settings.calendar.error.calendar_access_denied")
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .padding()
-                    Button("Open Calendar Settings") {
+                    Button("settings.calendar.button.open_calendar_settings") {
                         if let settingsURL = URL(
                             string:
                                 "x-apple.systempreferences:com.apple.preference.security?Privacy_Calendars"
@@ -69,13 +69,13 @@ struct CalendarSettings: View {
                     }
                 }
             }
-            Section(header: Text("Reminders")) {
+            Section(header: Text("settings.calendar.section.reminders")) {
                 if calendarManager.reminderAuthorizationStatus != .fullAccess {
-                    Text("Reminder access is denied. Please enable it in System Settings.")
+                    Text("settings.calendar.error.reminder_access_denied")
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .padding()
-                    Button("Open Reminder Settings") {
+                    Button("settings.calendar.button.open_reminder_settings") {
                         if let settingsURL = URL(
                             string:
                                 "x-apple.systempreferences:com.apple.preference.security?Privacy_Reminders"
@@ -107,7 +107,7 @@ struct CalendarSettings: View {
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Calendar")
+        .navigationTitle("settings.sidebar.calendar")
         .onAppear {
             Task {
                 await calendarManager.checkCalendarAuthorization()

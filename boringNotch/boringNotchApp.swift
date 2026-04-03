@@ -7,6 +7,7 @@
 
 import AVFoundation
 import Combine
+import Foundation
 import Defaults
 import KeyboardShortcuts
 import Sparkle
@@ -32,16 +33,16 @@ struct DynamicNotchApp: App {
 
     var body: some Scene {
         MenuBarExtra("boring.notch", systemImage: "sparkle", isInserted: $showMenuBarIcon) {
-            Button("Settings") {
+            Button("settings.common.settings") {
                 SettingsWindowController.shared.showWindow()
             }
             .keyboardShortcut(KeyEquivalent(","), modifiers: .command)
             CheckForUpdatesView(updater: updaterController.updater)
             Divider()
-            Button("Restart Boring Notch") {
+            Button("settings.common.restart_boring_notch") {
                 ApplicationRelauncher.restart()
             }
-            Button("Quit", role: .destructive) {
+            Button("settings.common.quit", role: .destructive) {
                 NSApplication.shared.terminate(self)
             }
             .keyboardShortcut(KeyEquivalent("Q"), modifiers: .command)
@@ -453,7 +454,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             && Defaults[.mediaController] == .nowPlaying
         {
             DispatchQueue.main.async {
-                self.showOnboardingWindow(step: .musicPermission)
+                self.showOnboardingWindow(step: .installHooks)
             }
         }
 
@@ -591,7 +592,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.terminate(self)
     }
 
-    private func showOnboardingWindow(step: OnboardingStep = .welcome) {
+    private func showOnboardingWindow(step: OnboardingStep = .identifyCLI) {
         if onboardingWindowController == nil {
             let window = NSWindow(
                 contentRect: NSRect(x: 0, y: 0, width: 400, height: 600),
@@ -600,32 +601,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 defer: false
             )
             window.center()
-            window.title = "Onboarding"
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
-            window.contentView = NSHostingView(
-                rootView: OnboardingView(
-                    step: step,
-                    onFinish: {
-                        window.orderOut(nil)
-//                        NSApp.setActivationPolicy(.accessory)
-                        window.close()
-                        NSApp.deactivate()
-                    },
-                    onOpenSettings: {
-                        window.close()
-                        SettingsWindowController.shared.showWindow()
-                    }
-                ))
             window.isRestorable = false
             window.identifier = NSUserInterfaceItemIdentifier("OnboardingWindow")
 
             onboardingWindowController = NSWindowController(window: window)
         }
 
-//        NSApp.setActivationPolicy(.regular)
+        guard let window = onboardingWindowController?.window else { return }
+
+        window.title = String(localized: "onboarding.window.title")
+        window.contentView = NSHostingView(
+            rootView: OnboardingView(
+                step: step,
+                onFinish: { [weak window] in
+                    BoringViewCoordinator.shared.firstLaunch = false
+                    window?.orderOut(nil)
+                    window?.close()
+                    NSApp.deactivate()
+                },
+                onOpenSettings: {
+                    SettingsWindowController.shared.showWindow()
+                }
+            ))
+
         NSApp.activate(ignoringOtherApps: true)
-        onboardingWindowController?.window?.makeKeyAndOrderFront(nil)
-        onboardingWindowController?.window?.orderFrontRegardless()
+        window.makeKeyAndOrderFront(nil)
+        window.orderFrontRegardless()
     }
 }

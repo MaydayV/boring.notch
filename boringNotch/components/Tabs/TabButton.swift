@@ -24,7 +24,7 @@ struct TabButton: View {
 }
 
 #Preview {
-    TabButton(label: "Home", icon: "tray.fill", selected: true) {
-        print("Tapped")
+    TabButton(label: String(localized: "app.tab.home"), icon: "tray.fill", selected: true) {
+        Void()
     }
 }

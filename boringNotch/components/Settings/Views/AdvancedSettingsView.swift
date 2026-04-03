@@ -22,14 +22,14 @@ struct Advanced: View {
     
     // macOS accent colors
     enum PresetAccentColor: String, CaseIterable, Identifiable {
-        case blue = "Blue"
-        case purple = "Purple"
-        case pink = "Pink"
-        case red = "Red"
-        case orange = "Orange"
-        case yellow = "Yellow"
-        case green = "Green"
-        case graphite = "Graphite"
+        case blue
+        case purple
+        case pink
+        case red
+        case orange
+        case yellow
+        case green
+        case graphite
         
         var id: String { self.rawValue }
         
@@ -52,9 +52,9 @@ struct Advanced: View {
             Section {
                 VStack(alignment: .leading, spacing: 16) {
                     // Toggle between system and custom
-                    Picker("Accent color", selection: $useCustomAccentColor) {
-                        Text("System").tag(false)
-                        Text("Custom").tag(true)
+                    Picker("settings.advanced.picker.accent_color_mode", selection: $useCustomAccentColor) {
+                        Text("settings.advanced.option.system").tag(false)
+                        Text("settings.advanced.option.custom").tag(true)
                     }
                     .pickerStyle(.segmented)
                     
@@ -69,9 +69,9 @@ struct Advanced: View {
                                 ) {}
                                 
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text("Using System Accent")
+                                    Text("settings.advanced.label.using_system_accent")
                                         .font(.body)
-                                    Text("Your macOS system accent color")
+                                    Text("settings.advanced.label.your_macos_system_accent_color")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
@@ -81,7 +81,7 @@ struct Advanced: View {
                     } else {
                         // Custom color options
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Color Presets")
+                            Text("settings.advanced.section.color_presets")
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(.secondary)
@@ -108,9 +108,9 @@ struct Advanced: View {
                             // Custom color picker
                             HStack(spacing: 12) {
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text("Pick a Color")
+                                    Text("settings.advanced.label.pick_a_color")
                                         .font(.body)
-                                    Text("Choose any color")
+                                    Text("settings.advanced.label.choose_any_color")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
@@ -145,9 +145,9 @@ struct Advanced: View {
                 }
                 .padding(.vertical, 4)
             } header: {
-                Text("Accent color")
+                Text("settings.advanced.section.accent_color")
             } footer: {
-                Text("Choose between your system accent color or customize it with your own selection.")
+                Text("settings.advanced.footer.choose_between_system_or_custom")
                     .multilineTextAlignment(.trailing)
                     .foregroundStyle(.secondary)
                     .font(.caption)
@@ -158,41 +158,41 @@ struct Advanced: View {
             
             Section {
                 Defaults.Toggle(key: .enableShadow) {
-                    Text("Enable window shadow")
+                    Text("settings.advanced.toggle.enable_window_shadow")
                 }
                 Defaults.Toggle(key: .cornerRadiusScaling) {
-                    Text("Scale corner radius for closed notch")
+                    Text("settings.advanced.toggle.scale_corner_radius_for_closed_notch")
                 }
             } header: {
-                Text("Window Appearance")
+                Text("settings.advanced.section.window_appearance")
             }
 
             Section {
                 Defaults.Toggle(key: .extendHoverArea) {
-                    Text("Extend hover area")
+                    Text("settings.advanced.toggle.extend_hover_area")
                 }
                 Defaults.Toggle(key: .hideTitleBar) {
-                    Text("Hide title bar")
+                    Text("settings.advanced.toggle.hide_title_bar")
                 }
                 Defaults.Toggle(key: .showOnLockScreen) {
-                    Text("Show notch on lock screen")
+                    Text("settings.advanced.toggle.show_notch_on_lock_screen")
                 }
                 Defaults.Toggle(key: .hideFromScreenRecording) {
-                    Text("Hide from screen recording")
+                    Text("settings.advanced.toggle.hide_from_screen_recording")
                 }
                 Defaults.Toggle(key: .hideNonNotchedFromMissionControl) {
-                    Text("Hide windows on non-notch displays from Mission Control")
+                    Text("settings.advanced.toggle.hide_windows_on_non_notch_displays_from_mission_control")
                 }
             } header: {
-                Text("Window Behavior")
+                Text("settings.advanced.section.window_behavior")
             }
             
             Section {
                 Defaults.Toggle(key: .normalizeGestureDirection) {
-                    Text("Normalize gesture direction")
+                    Text("settings.advanced.toggle.normalize_gesture_direction")
                 }
             } header: {
-                Text("Miscellaneous")
+                Text("settings.advanced.section.miscellaneous")
             }
             
             Section {
@@ -211,10 +211,10 @@ struct Advanced: View {
                                         )
                                 )
 
-                            Text("Default")
-                                .fontWeight(.medium)
-                                .font(.caption)
-                                .foregroundStyle(icon == selectedIcon ? .white : .secondary)
+                            Text("settings.advanced.label.default")
+                            .fontWeight(.medium)
+                            .font(.caption)
+                            .foregroundStyle(icon == selectedIcon ? .white : .secondary)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 3)
                                 .background(
@@ -234,13 +234,13 @@ struct Advanced: View {
                 .disabled(true)
             } header: {
                 HStack {
-                    Text("App icon")
+                    Text("settings.advanced.section.app_icon")
                     comingSoonBadge()
                 }
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Advanced")
+        .navigationTitle("settings.sidebar.advanced")
         .onAppear {
             loadCustomColor()
         }
@@ -328,6 +328,6 @@ struct AccentCircleButton: View {
             }
         }
         .buttonStyle(.plain)
-        .help(isSystemDefault ? "Use your macOS system accent color" : "")
+        .help(isSystemDefault ? Text("settings.advanced.help.system_accent_color") : Text(""))
     }
 }

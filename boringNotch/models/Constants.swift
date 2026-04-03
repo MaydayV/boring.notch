@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Defaults
+import Darwin
 
 // MARK: - File System Paths
 private let availableDirectories = FileManager
@@ -18,6 +19,141 @@ let appVersion = "\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as
 
 let temporaryDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
 let spacing: CGFloat = 16
+
+enum AgentHookPaths {
+    static let bridgeDirectoryURL = AgentPathResolver.sandboxHomeDirectoryURL
+        .appendingPathComponent(".boring-notch/bin", isDirectory: true)
+    static let bridgeCommandURL = bridgeDirectoryURL.appendingPathComponent("boring-notch-agent-bridge")
+    static let supportDirectoryURL = AgentPathResolver.sandboxHomeDirectoryURL
+        .appendingPathComponent("Library/Application Support/boring.notch/Agents", isDirectory: true)
+    static let codexConfigURL = AgentPathResolver.realHomeDirectoryURL
+        .appendingPathComponent(".codex/hooks.json", isDirectory: false)
+    static let claudeSettingsURL = AgentPathResolver.realHomeDirectoryURL
+        .appendingPathComponent(".claude/settings.json", isDirectory: false)
+    static let geminiSettingsURL = AgentPathResolver.realHomeDirectoryURL
+        .appendingPathComponent(".gemini/settings.json", isDirectory: false)
+}
+
+enum AgentPathResolver {
+    static let sandboxHomeDirectoryURL = FileManager.default.homeDirectoryForCurrentUser
+    static let realHomeDirectoryURL: URL = {
+        guard let passwd = getpwuid(getuid()),
+              let homeCString = passwd.pointee.pw_dir else {
+            return sandboxHomeDirectoryURL
+        }
+        return URL(fileURLWithPath: String(cString: homeCString), isDirectory: true)
+    }()
+
+    static var sandboxHomePath: String {
+        sandboxHomeDirectoryURL.standardizedFileURL.path
+    }
+
+    static var realHomePath: String {
+        realHomeDirectoryURL.standardizedFileURL.path
+    }
+
+    static var requiresRealHomeSecurityScope: Bool {
+        sandboxHomePath != realHomePath
+    }
+
+    static func providerConfigFileName(for provider: AgentProvider) -> String? {
+        switch provider {
+        case .claude:
+            return "settings.json"
+        case .codex:
+            return "hooks.json"
+        case .gemini:
+            return "settings.json"
+        case .cursor, .opencode, .droid, .openclaw:
+            return nil
+        }
+    }
+
+    static func providerHiddenDirectoryName(for provider: AgentProvider) -> String? {
+        switch provider {
+        case .claude:
+            return ".claude"
+        case .codex:
+            return ".codex"
+        case .gemini:
+            return ".gemini"
+        case .cursor:
+            return ".cursor"
+        case .opencode:
+            return ".opencode"
+        case .droid:
+            return ".droid"
+        case .openclaw:
+            return ".openclaw"
+        }
+    }
+
+    static func defaultHookConfigURL(for provider: AgentProvider) -> URL? {
+        guard let configFileName = providerConfigFileName(for: provider),
+              let hiddenDirectoryName = providerHiddenDirectoryName(for: provider) else {
+            return nil
+        }
+
+        return realHomeDirectoryURL
+            .appendingPathComponent(hiddenDirectoryName, isDirectory: true)
+            .appendingPathComponent(configFileName, isDirectory: false)
+    }
+
+    static func defaultAuthorizationRootURL(for provider: AgentProvider) -> URL? {
+        guard let hiddenDirectoryName = providerHiddenDirectoryName(for: provider) else {
+            return nil
+        }
+
+        return realHomeDirectoryURL.appendingPathComponent(hiddenDirectoryName, isDirectory: true)
+    }
+
+    static func displayScanPaths(for provider: AgentProvider) -> [String] {
+        provider.scanRootPaths.map {
+            realHomeDirectoryURL
+                .appendingPathComponent($0, isDirectory: false)
+                .path
+        }
+    }
+
+    static func resolvedHookConfigURL(for provider: AgentProvider, bookmarkRoot: URL) -> URL? {
+        guard let configFileName = providerConfigFileName(for: provider),
+              let hiddenDirectoryName = providerHiddenDirectoryName(for: provider) else {
+            return nil
+        }
+
+        let standardizedRoot = bookmarkRoot.standardizedFileURL
+        let components = standardizedRoot.pathComponents
+        if let hiddenIndex = components.lastIndex(where: { $0.lowercased() == hiddenDirectoryName }) {
+            let hiddenPath = NSString.path(withComponents: Array(components.prefix(hiddenIndex + 1)))
+            let hiddenURL = URL(fileURLWithPath: hiddenPath, isDirectory: true)
+            return hiddenURL.appendingPathComponent(configFileName, isDirectory: false)
+        }
+
+        let directConfigURL = standardizedRoot.appendingPathComponent(configFileName, isDirectory: false)
+        if FileManager.default.fileExists(atPath: directConfigURL.path) {
+            return directConfigURL
+        }
+
+        return standardizedRoot
+            .appendingPathComponent(hiddenDirectoryName, isDirectory: true)
+            .appendingPathComponent(configFileName, isDirectory: false)
+    }
+}
+
+extension AgentProvider {
+    var hookConfigURL: URL? {
+        switch self {
+        case .claude:
+            return AgentHookPaths.claudeSettingsURL
+        case .codex:
+            return AgentHookPaths.codexConfigURL
+        case .gemini:
+            return AgentHookPaths.geminiSettingsURL
+        case .cursor, .opencode, .droid, .openclaw:
+            return nil
+        }
+    }
+}
 
 enum CalendarSelectionState: Codable, Defaults.Serializable {
     case all
@@ -258,6 +394,23 @@ extension Defaults.Keys {
     static let tileShowLabels = Key<Bool>("tileShowLabels", default: false)
     static let showCalendar = Key<Bool>("showCalendar", default: false)
     static let showWeather = Key<Bool>("showWeather", default: false)
+    static let showAgentsTab = Key<Bool>("showAgentsTab", default: true)
+    static let enableAgentJumpAction = Key<Bool>("enableAgentJumpAction", default: true)
+    static let showClaudeAgentProvider = Key<Bool>("showClaudeAgentProvider", default: true)
+    static let showCodexAgentProvider = Key<Bool>("showCodexAgentProvider", default: true)
+    static let showGeminiAgentProvider = Key<Bool>("showGeminiAgentProvider", default: true)
+    static let showCursorAgentProvider = Key<Bool>("showCursorAgentProvider", default: true)
+    static let showOpenCodeAgentProvider = Key<Bool>("showOpenCodeAgentProvider", default: true)
+    static let showDroidAgentProvider = Key<Bool>("showDroidAgentProvider", default: true)
+    static let showOpenClawAgentProvider = Key<Bool>("showOpenClawAgentProvider", default: true)
+    static let agentPanelStyle = Key<AgentPanelStyle>("agentPanelStyle", default: .compact)
+    static let claudeAgentRootBookmark = Key<Data?>("claudeAgentRootBookmark", default: nil)
+    static let codexAgentRootBookmark = Key<Data?>("codexAgentRootBookmark", default: nil)
+    static let geminiAgentRootBookmark = Key<Data?>("geminiAgentRootBookmark", default: nil)
+    static let cursorAgentRootBookmark = Key<Data?>("cursorAgentRootBookmark", default: nil)
+    static let openCodeAgentRootBookmark = Key<Data?>("openCodeAgentRootBookmark", default: nil)
+    static let droidAgentRootBookmark = Key<Data?>("droidAgentRootBookmark", default: nil)
+    static let openClawAgentRootBookmark = Key<Data?>("openClawAgentRootBookmark", default: nil)
     static let weatherCity = Key<String>("weatherCity", default: "Cupertino")
     static let weatherUnit = Key<WeatherTemperatureUnit>("weatherUnit", default: .celsius)
     static let weatherRefreshMinutes = Key<Int>("weatherRefreshMinutes", default: 30)

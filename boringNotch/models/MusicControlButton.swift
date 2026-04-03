@@ -6,6 +6,7 @@
 //
 
 import Defaults
+import SwiftUI
 
 enum MusicControlButton: String, CaseIterable, Identifiable, Codable, Defaults.Serializable {
     case shuffle
@@ -44,28 +45,28 @@ enum MusicControlButton: String, CaseIterable, Identifiable, Codable, Defaults.S
         .goForward
     ]
 
-    var label: String {
+    var label: LocalizedStringKey {
         switch self {
         case .shuffle:
-            return "Shuffle"
+            return "settings.music_controls.option.shuffle"
         case .previous:
-            return "Previous"
+            return "settings.music_controls.option.previous"
         case .playPause:
-            return "Play/Pause"
+            return "settings.music_controls.option.play_pause"
         case .next:
-            return "Next"
+            return "settings.music_controls.option.next"
         case .repeatMode:
-            return "Repeat"
+            return "settings.music_controls.option.repeat"
         case .volume:
-            return "Volume"
+            return "settings.music_controls.option.volume"
         case .favorite:
-            return "Favorite"
+            return "settings.music_controls.option.favorite"
         case .goBackward:
-            return "Backward 15s"
+            return "settings.music_controls.option.backward_15s"
         case .goForward:
-            return "Forward 15s"
+            return "settings.music_controls.option.forward_15s"
         case .none:
-            return "Empty slot"
+            return "settings.music_controls.option.empty_slot"
         }
     }
 

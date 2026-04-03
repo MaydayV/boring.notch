@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftUIIntrospect
 
 struct SettingsView: View {
-    @State private var selectedTab = "General"
+    @State private var selectedTab: SettingsTab = .general
     @State private var accentColorUpdateTrigger = UUID()
 
     let updaterController: SPUStandardUpdaterController?
@@ -22,41 +22,14 @@ struct SettingsView: View {
     var body: some View {
         NavigationSplitView {
             List(selection: $selectedTab) {
-                NavigationLink(value: "General") {
-                    Label("General", systemImage: "gear")
-                }
-                NavigationLink(value: "Appearance") {
-                    Label("Appearance", systemImage: "eye")
-                }
-                NavigationLink(value: "Media") {
-                    Label("Media", systemImage: "play.laptopcomputer")
-                }
-                NavigationLink(value: "Calendar") {
-                    Label("Calendar", systemImage: "calendar")
-                }
-                NavigationLink(value: "Weather") {
-                    Label("Weather", systemImage: "cloud.sun")
-                }
-                NavigationLink(value: "OSD") {
-                    Label("OSD", systemImage: "dial.medium.fill")
-                }
-                NavigationLink(value: "Battery") {
-                    Label("Battery", systemImage: "battery.100.bolt")
-                }
-                NavigationLink(value: "Shelf") {
-                    Label("Shelf", systemImage: "books.vertical")
-                }
-                NavigationLink(value: "Mirror") {
-                    Label("Mirror", systemImage: "camera")
-                }
-                NavigationLink(value: "Shortcuts") {
-                    Label("Shortcuts", systemImage: "keyboard")
-                }
-                NavigationLink(value: "Advanced") {
-                    Label("Advanced", systemImage: "gearshape.2")
-                }
-                NavigationLink(value: "About") {
-                    Label("About", systemImage: "info.circle")
+                ForEach(SettingsTab.allCases) { tab in
+                    NavigationLink(value: tab) {
+                        Label {
+                            Text(tab.titleKey)
+                        } icon: {
+                            Image(systemName: tab.systemImage)
+                        }
+                    }
                 }
             }
             .listStyle(SidebarListStyle())
@@ -64,44 +37,7 @@ struct SettingsView: View {
             .toolbar(removing: .sidebarToggle)
             .navigationSplitViewColumnWidth(200)
         } detail: {
-            Group {
-                switch selectedTab {
-                case "General":
-                    GeneralSettings()
-                case "Appearance":
-                    Appearance()
-                case "Media":
-                    Media()
-                case "Calendar":
-                    CalendarSettings()
-                case "Weather":
-                    WeatherSettings()
-                case "OSD":
-                    OSDSettings()
-                case "Battery":
-                    Charge()
-                case "Shelf":
-                    Shelf()
-                case "Mirror":
-                    MirrorSettings()
-                case "Shortcuts":
-                    Shortcuts()
-                case "Advanced":
-                    Advanced()
-                case "About":
-                    if let controller = updaterController {
-                        About(updaterController: controller)
-                    } else {
-                        // Fallback with a default controller
-                        About(
-                            updaterController: SPUStandardUpdaterController(
-                                startingUpdater: false, updaterDelegate: nil,
-                                userDriverDelegate: nil))
-                    }
-                default:
-                    GeneralSettings()
-                }
-            }
+            settingsDetail(for: selectedTab)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationSplitViewStyle(.balanced)
@@ -120,6 +56,119 @@ struct SettingsView: View {
         .id(accentColorUpdateTrigger)
         .onReceive(NotificationCenter.default.publisher(for: .accentColorChanged)) { _ in
             accentColorUpdateTrigger = UUID()
+        }
+    }
+
+    @ViewBuilder
+    private func settingsDetail(for tab: SettingsTab) -> some View {
+        switch tab {
+        case .general:
+            GeneralSettings()
+        case .appearance:
+            Appearance()
+        case .media:
+            Media()
+        case .calendar:
+            CalendarSettings()
+        case .weather:
+            WeatherSettings()
+        case .osd:
+            OSDSettings()
+        case .battery:
+            Charge()
+        case .shelf:
+            Shelf()
+        case .agents:
+            AgentsSettingsView()
+        case .shortcuts:
+            Shortcuts()
+        case .advanced:
+            Advanced()
+        case .about:
+            if let controller = updaterController {
+                About(updaterController: controller)
+            } else {
+                // Fallback with a default controller
+                About(
+                    updaterController: SPUStandardUpdaterController(
+                        startingUpdater: false, updaterDelegate: nil,
+                        userDriverDelegate: nil))
+            }
+        }
+    }
+}
+
+private enum SettingsTab: String, CaseIterable, Identifiable {
+    case general
+    case appearance
+    case media
+    case calendar
+    case weather
+    case osd
+    case battery
+    case shelf
+    case agents
+    case shortcuts
+    case advanced
+    case about
+
+    var id: String { rawValue }
+
+    var titleKey: LocalizedStringKey {
+        switch self {
+        case .general:
+            "settings.sidebar.general"
+        case .appearance:
+            "settings.sidebar.appearance"
+        case .media:
+            "settings.sidebar.media"
+        case .calendar:
+            "settings.sidebar.calendar"
+        case .weather:
+            "settings.sidebar.weather"
+        case .osd:
+            "settings.sidebar.osd"
+        case .battery:
+            "settings.sidebar.battery"
+        case .shelf:
+            "settings.sidebar.shelf"
+        case .agents:
+            "settings.sidebar.agents"
+        case .shortcuts:
+            "settings.sidebar.shortcuts"
+        case .advanced:
+            "settings.sidebar.advanced"
+        case .about:
+            "settings.sidebar.about"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .general:
+            "gear"
+        case .appearance:
+            "eye"
+        case .media:
+            "play.laptopcomputer"
+        case .calendar:
+            "calendar"
+        case .weather:
+            "cloud.sun"
+        case .osd:
+            "dial.medium.fill"
+        case .battery:
+            "battery.100.bolt"
+        case .shelf:
+            "books.vertical"
+        case .agents:
+            "terminal"
+        case .shortcuts:
+            "keyboard"
+        case .advanced:
+            "gearshape.2"
+        case .about:
+            "info.circle"
         }
     }
 }

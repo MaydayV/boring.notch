@@ -4,6 +4,7 @@
 //
 
 import Defaults
+import Foundation
 import SwiftUI
 
 struct WeatherTabView: View {
@@ -43,9 +44,9 @@ struct WeatherTabView: View {
         VStack(alignment: .leading, spacing: 0) {
             if !showWeather {
                 statePanel {
-                    Label(localized("weather_tab.off.title", fallback: "Weather is off"), systemImage: "cloud.slash")
+                    Label(localized("weather_tab.off.title"), systemImage: "cloud.slash")
                         .font(.subheadline.weight(.semibold))
-                    Text(localized("weather_tab.off.message", fallback: "Turn on Show weather in Settings > Weather."))
+                    Text(localized("weather_tab.off.message"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -57,7 +58,7 @@ struct WeatherTabView: View {
                     HStack(spacing: 8) {
                         ProgressView()
                             .controlSize(.small)
-                        Text(localized("weather_tab.loading", fallback: "Loading weather..."))
+                        Text(localized("weather_tab.loading"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -70,7 +71,6 @@ struct WeatherTabView: View {
                     Text(
                         localizedFormat(
                             "weather_tab.current_city_format",
-                            fallback: "Current city: %@",
                             weatherCity
                         )
                     )
@@ -79,13 +79,13 @@ struct WeatherTabView: View {
                     Button {
                         weatherManager.requestRefresh(replacingCurrent: true)
                     } label: {
-                        Label(localized("weather_tab.retry", fallback: "Retry"), systemImage: "arrow.clockwise")
+                        Label(localized("weather_tab.retry"), systemImage: "arrow.clockwise")
                     }
                     .buttonStyle(.plain)
                 }
             } else {
                 statePanel {
-                    Text(localized("weather_tab.unavailable", fallback: "Weather not available"))
+                    Text(localized("weather_tab.unavailable"))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -108,13 +108,12 @@ struct WeatherTabView: View {
         }
     }
 
-    private func localized(_ key: String, fallback: String) -> String {
-        let value = NSLocalizedString(key, comment: "")
-        return value == key ? fallback : value
+    private func localized(_ key: String) -> String {
+        String(localized: String.LocalizationValue(key))
     }
 
-    private func localizedFormat(_ key: String, fallback: String, _ arguments: CVarArg...) -> String {
-        String(format: localized(key, fallback: fallback), locale: Locale.current, arguments: arguments)
+    private func localizedFormat(_ key: String, _ arguments: CVarArg...) -> String {
+        String(format: localized(key), locale: Locale.current, arguments: arguments)
     }
 
     private func statePanel<Content: View>(@ViewBuilder content: () -> Content) -> some View {
@@ -181,8 +180,8 @@ struct WeatherTabView: View {
         } label: {
             Text(
                 page == .current
-                    ? localized("weather_tab.segment.current", fallback: "Current")
-                    : localized("weather_tab.segment.forecast", fallback: "Forecast")
+                    ? localized("weather_tab.segment.current")
+                    : localized("weather_tab.segment.forecast")
             )
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(selectedPage == page ? .white : .white.opacity(0.78))
@@ -212,7 +211,6 @@ struct WeatherTabView: View {
                 Text(
                     localizedFormat(
                         "weather_tab.next_days_format",
-                        fallback: "Next %d days",
                         6
                     )
                 )
@@ -228,7 +226,7 @@ struct WeatherTabView: View {
     private func dailyRow(for snapshot: WeatherSnapshot, limit: Int) -> some View {
         let points = Array(snapshot.dailyForecast.prefix(max(1, limit)))
         if points.isEmpty {
-            Text(localized("weather_tab.no_forecast", fallback: "No forecast data"))
+            Text(localized("weather_tab.no_forecast"))
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.82))
         } else {
@@ -254,7 +252,6 @@ struct WeatherTabView: View {
                             Text(
                                 localizedFormat(
                                     "weather_tab.rain_value_format",
-                                    fallback: "Rain %d%%",
                                     Int(rain.rounded())
                                 )
                             )
@@ -284,7 +281,6 @@ struct WeatherTabView: View {
             Text(
                 localizedFormat(
                     "weather_tab.updated_format",
-                    fallback: "Updated %@",
                     snapshot.updatedAt.formatted(date: .omitted, time: .shortened)
                 )
             )
@@ -295,7 +291,7 @@ struct WeatherTabView: View {
             Spacer()
 
             if staleError != nil {
-                Label(localized("weather_tab.cached_badge", fallback: "Cached"), systemImage: "exclamationmark.triangle.fill")
+                Label(localized("weather_tab.cached_badge"), systemImage: "exclamationmark.triangle.fill")
                     .font(.caption2)
                     .foregroundStyle(.white.opacity(0.86))
             }
@@ -354,10 +350,10 @@ struct WeatherTabView: View {
     @ViewBuilder
     private func metricsGrid(for snapshot: WeatherSnapshot, limit: Int, compact: Bool, singleColumn: Bool) -> some View {
         let metrics: [(String, String, String)] = [
-            (localized("weather_tab.metric.feels", fallback: "Feels"), snapshot.feelsLikeText ?? "--", "thermometer.medium"),
-            (localized("weather_tab.metric.humidity", fallback: "Humidity"), snapshot.humidityText ?? "--", "humidity.fill"),
-            (localized("weather_tab.metric.wind", fallback: "Wind"), snapshot.windSpeedText ?? "--", "wind"),
-            (localized("weather_tab.metric.rain", fallback: "Rain"), snapshot.precipitationText ?? "--", "drop.fill")
+            (localized("weather_tab.metric.feels"), snapshot.feelsLikeText ?? "--", "thermometer.medium"),
+            (localized("weather_tab.metric.humidity"), snapshot.humidityText ?? "--", "humidity.fill"),
+            (localized("weather_tab.metric.wind"), snapshot.windSpeedText ?? "--", "wind"),
+            (localized("weather_tab.metric.rain"), snapshot.precipitationText ?? "--", "drop.fill")
         ]
         let visibleMetrics = Array(metrics.prefix(max(1, min(limit, metrics.count))))
         let columns = singleColumn ? [GridItem(.flexible())] : [GridItem(.flexible()), GridItem(.flexible())]
@@ -392,7 +388,6 @@ struct WeatherTabView: View {
         guard let high = snapshot.highTemperature, let low = snapshot.lowTemperature else { return nil }
         return localizedFormat(
             "weather_tab.high_low_format",
-            fallback: "L %d°  H %d°",
             Int(low.rounded()),
             Int(high.rounded())
         )

@@ -22,6 +22,7 @@ public enum NotchViews {
     case home
     case shelf
     case weather
+    case agents
 }
 
 enum DownloadIndicatorStyle: String, Defaults.Serializable {
@@ -54,11 +55,16 @@ enum SliderColorEnum: String, CaseIterable, Defaults.Serializable {
     var localizedString: String {
         switch self {
         case .white:
-            return NSLocalizedString("slider_color_white", comment: "Slider color option: white")
+            return String(localized: "slider_color_white")
         case .albumArt:
-            return NSLocalizedString("slider_color_album_art", comment: "Slider color option: match album art")
+            return String(localized: "slider_color_album_art")
         case .accent:
-            return NSLocalizedString("slider_color_accent", comment: "Slider color option: accent color")
+            return String(localized: "slider_color_accent")
         }
     }
+}
+
+enum AgentPanelStyle: String, CaseIterable, Defaults.Serializable {
+    case compact
+    case detailed
 }

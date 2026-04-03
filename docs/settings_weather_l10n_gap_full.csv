@@ -1,0 +1,60 @@
+category,file,key,english,chinese_suggested,notes
+weather_key_missing_in_xcstrings,(code key),weather_tab.off.title,Weather is off,天气已关闭,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.off.message,Turn on Show weather in Settings > Weather.,请在“设置 > 天气”中开启“显示天气”。,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.loading,Loading weather...,正在加载天气...,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.retry,Retry,重试,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.unavailable,Weather not available,暂无天气数据,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.segment.current,Current,当前,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.segment.forecast,Forecast,预报,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.no_forecast,No forecast data,暂无预报数据,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.cached_badge,Cached,缓存,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.metric.feels,Feels,体感,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.metric.humidity,Humidity,湿度,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.metric.wind,Wind,风速,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.metric.rain,Rain,降雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.no_hourly,No hourly forecast,暂无逐小时预报,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.current_city_format,Current city: %@,当前城市：%@,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.next_days_format,Next %d days,未来 %d 天,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.rain_value_format,Rain %d%%,降雨 %d%%,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.updated_format,Updated %@,更新于 %@,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_tab.high_low_format,L %d°  H %d°,低 %d°  高 %d°,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_relative_now,Now,现在,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_relative_today,Today,今天,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_relative_tomorrow,Tomorrow,明天,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_error_unavailable,Weather unavailable,天气服务不可用,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_error_location_not_found,Location not found,未找到该地点,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_relative_day_format,Day %d,第 %d 天,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_error_service_unavailable_format,Weather service unavailable (%d),天气服务不可用（%d）,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_clear,Clear,晴朗,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_mainly_clear,Mainly clear,基本晴朗,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_partly_cloudy,Partly cloudy,局部多云,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_cloudy,Cloudy,多云,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_fog,Fog,雾,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_drizzle,Drizzle,毛毛雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_freezing_drizzle,Freezing drizzle,冻毛毛雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_rain,Rain,雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_freezing_rain,Freezing rain,冻雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_snow,Snow,雪,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_rain_showers,Rain showers,阵雨,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_snow_showers,Snow showers,阵雪,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_thunderstorm,Thunderstorm,雷暴,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_thunderstorm_hail,Thunderstorm with hail,雷暴伴冰雹,add key to Localizable.xcstrings source first
+weather_key_missing_in_xcstrings,(code key),weather_condition_unknown,Unknown,未知,add key to Localizable.xcstrings source first
+settings_literal_missing_key,boringNotch/components/Settings/SettingsView.swift,settings.tab.weather,Weather,天气,tab title
+settings_literal_missing_key,boringNotch/components/Settings/Views/OSDSettingsView.swift,settings.osd.apple_display_only_hint,"Only Apple displays are supported. In multi-display setups, the brightness OSD appears on the active display if supported, or on another supported display otherwise.",仅支持 Apple 显示器。在多显示器场景下，若当前活动显示器支持，将在其上显示亮度 OSD；否则显示在其他受支持显示器上。,help text
+settings_literal_missing_key,boringNotch/components/Settings/Views/OSDSettingsView.swift,settings.osd.betterdisplay_unavailable,BetterDisplay is not installed or not running,BetterDisplay 未安装或未运行,help text
+settings_literal_missing_key,boringNotch/components/Settings/Views/OSDSettingsView.swift,settings.osd.lunar_unavailable,Lunar is not installed or not reachable,Lunar 未安装或不可用,help text
+settings_literal_missing_key,boringNotch/components/Settings/Views/OSDSettingsView.swift,settings.osd.keyboard_builtin_only,Keyboard brightness currently supports the built-in source only.,键盘亮度目前仅支持内建来源。,help text
+settings_literal_missing_key,boringNotch/components/Settings/Views/OSDSettingsView.swift,settings.osd.option_key_behavior_help,Define what happens when you hold the Option key while pressing media keys.,定义按住 Option 键并按媒体键时的行为。,help text
+settings_literal_missing_key,boringNotch/components/Settings/Views/ShelfSettingsView.swift,settings.shelf.current_provider_format,Currently selected: %@,当前选择：%@,convert interpolation to format key
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.show_weather,Show weather,显示天气,toggle title
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.city_hint,City (supports lowercase pinyin),城市（支持小写拼音）,text field prompt
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.searching_cities,Searching cities...,正在搜索城市...,state text
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.city_suggestions,City suggestions,城市建议,section label
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.temperature_unit,Temperature unit,温度单位,picker label
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.content,Weather content,天气内容,picker label
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.current_only,Current weather only,仅当前天气,segmented option
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.current_and_forecast,Current and forecast,当前+预报,segmented option
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.refresh_interval,Weather refresh interval,天气刷新间隔,stepper title
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.refresh_minutes_format,%d min,%d 分钟,convert interpolation to format key
+settings_literal_missing_key,boringNotch/components/Settings/Views/WeatherSettingsView.swift,settings.weather.title,Weather,天气,navigation title

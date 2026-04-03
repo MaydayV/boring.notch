@@ -71,6 +71,17 @@
 		11CFC6632E09918400748C80 /* MusicControllerSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CFC6622E09917B00748C80 /* MusicControllerSelectionView.swift */; };
 		11CFC6652E09C7B300748C80 /* OnboardingFinishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CFC6642E09C7B300748C80 /* OnboardingFinishView.swift */; };
 		11D58EA22E760AE100FA8377 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D58EA12E760AE100FA8377 /* ImageService.swift */; };
+		A1B2C3D4E5F6010203040501 /* AgentBridgeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040601 /* AgentBridgeClient.swift */; };
+		A1B2C3D4E5F6010203040502 /* AgentHubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040602 /* AgentHubManager.swift */; };
+		A1B2C3D4E5F6010203040503 /* AgentJumpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040603 /* AgentJumpService.swift */; };
+		A1B2C3D4E5F6010203040504 /* AgentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040604 /* AgentModels.swift */; };
+		A1B2C3D4E5F6010203040505 /* AgentProviderScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040605 /* AgentProviderScanner.swift */; };
+		A1B2C3D4E5F6010203040506 /* AgentSessionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040606 /* AgentSessionCardView.swift */; };
+		A1B2C3D4E5F6010203040507 /* AgentClosedSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040607 /* AgentClosedSummaryView.swift */; };
+		A1B2C3D4E5F6010203040508 /* AgentsTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040608 /* AgentsTabView.swift */; };
+		A1B2C3D4E5F6010203040509 /* AgentsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6010203040609 /* AgentsSettingsView.swift */; };
+		A1B2C3D4E5F601020304050A /* AgentHookInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F601020304060A /* AgentHookInstaller.swift */; };
+		A1B2C3D4E5F601020304050B /* AgentSessionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F601020304060B /* AgentSessionRowView.swift */; };
 		11DB26662EDD0BE1001EA0CF /* LyricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB26652EDD0BE1001EA0CF /* LyricsService.swift */; };
 		11DB26732EDD0CDF001EA0CF /* ShortcutsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB26712EDD0CDF001EA0CF /* ShortcutsSettingsView.swift */; };
 		11DB26742EDD0CDF001EA0CF /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DB266C2EDD0CDF001EA0CF /* GeneralSettingsView.swift */; };
@@ -256,6 +267,17 @@
 		11CFC6622E09917B00748C80 /* MusicControllerSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicControllerSelectionView.swift; sourceTree = "<group>"; };
 		11CFC6642E09C7B300748C80 /* OnboardingFinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFinishView.swift; sourceTree = "<group>"; };
 		11D58EA12E760AE100FA8377 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040601 /* AgentBridgeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBridgeClient.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040602 /* AgentHubManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentHubManager.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040603 /* AgentJumpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentJumpService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040604 /* AgentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentModels.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040605 /* AgentProviderScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentProviderScanner.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040606 /* AgentSessionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSessionCardView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040607 /* AgentClosedSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentClosedSummaryView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040608 /* AgentsTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentsTabView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6010203040609 /* AgentsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentsSettingsView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F601020304060A /* AgentHookInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentHookInstaller.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F601020304060B /* AgentSessionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentSessionRowView.swift; sourceTree = "<group>"; };
 		11DB26652EDD0BE1001EA0CF /* LyricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsService.swift; sourceTree = "<group>"; };
 		11DB26672EDD0CDF001EA0CF /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		11DB26682EDD0CDF001EA0CF /* AdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsView.swift; sourceTree = "<group>"; };
@@ -532,6 +554,7 @@
 			children = (
 				11DB26672EDD0CDF001EA0CF /* AboutView.swift */,
 				11DB26682EDD0CDF001EA0CF /* AdvancedSettingsView.swift */,
+				A1B2C3D4E5F6010203040609 /* AgentsSettingsView.swift */,
 				11DB26692EDD0CDF001EA0CF /* AppearanceSettingsView.swift */,
 				11DB266A2EDD0CDF001EA0CF /* BatterySettingsView.swift */,
 				11DB266B2EDD0CDF001EA0CF /* CalendarSettingsView.swift */,
@@ -591,6 +614,7 @@
 			isa = PBXGroup;
 			children = (
 				11985BDF2F37A3C800F81585 /* OSD */,
+				A1B2C3D4E5F6010203040701 /* Agents */,
 				B141C23B2CA5F50900AC8CC8 /* Onboarding */,
 				14C08BB72C8DE49E000F8AA0 /* Calendar */,
 				9A987A042C73CA66005CA465 /* Shelf */,
@@ -611,6 +635,7 @@
 		147163B52C5D804B0068B555 /* managers */ = {
 			isa = PBXGroup;
 			children = (
+				A1B2C3D4E5F6010203040700 /* Agents */,
 				11DB26652EDD0BE1001EA0CF /* LyricsService.swift */,
 				11D58EA12E760AE100FA8377 /* ImageService.swift */,
 				6A5F2C0D2F6A0001A1B2C3D4 /* WeatherManager.swift */,
@@ -621,6 +646,19 @@
 				14C08BB52C8DE42D000F8AA0 /* CalendarManager.swift */,
 			);
 			path = managers;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6010203040700 /* Agents */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F6010203040602 /* AgentHubManager.swift */,
+				A1B2C3D4E5F6010203040601 /* AgentBridgeClient.swift */,
+				A1B2C3D4E5F6010203040605 /* AgentProviderScanner.swift */,
+				A1B2C3D4E5F6010203040604 /* AgentModels.swift */,
+				A1B2C3D4E5F6010203040603 /* AgentJumpService.swift */,
+				A1B2C3D4E5F601020304060A /* AgentHookInstaller.swift */,
+			);
+			path = Agents;
 			sourceTree = "<group>";
 		};
 		149E0B982C737D26006418B1 /* Webcam */ = {
@@ -746,6 +784,17 @@
 				9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */,
 			);
 			path = Tabs;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F6010203040701 /* Agents */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D4E5F6010203040608 /* AgentsTabView.swift */,
+				A1B2C3D4E5F6010203040606 /* AgentSessionCardView.swift */,
+				A1B2C3D4E5F601020304060B /* AgentSessionRowView.swift */,
+				A1B2C3D4E5F6010203040607 /* AgentClosedSummaryView.swift */,
+			);
+			path = Agents;
 			sourceTree = "<group>";
 		};
 		9A987A042C73CA66005CA465 /* Shelf */ = {
@@ -1076,6 +1125,7 @@
 				11DB267B2EDD0CDF001EA0CF /* CalendarSettingsView.swift in Sources */,
 				11DB267C2EDD0CDF001EA0CF /* OSDSettingsView.swift in Sources */,
 				11DB267D2EDD0CDF001EA0CF /* MediaSettingsView.swift in Sources */,
+				A1B2C3D4E5F6010203040509 /* AgentsSettingsView.swift in Sources */,
 				6A5F2C0C2F6A0001A1B2C3D4 /* WeatherSettingsView.swift in Sources */,
 				14D570C62C5F38210011E668 /* BoringHeader.swift in Sources */,
 				14C08BB62C8DE42D000F8AA0 /* CalendarManager.swift in Sources */,
@@ -1115,6 +1165,16 @@
 				112FB7352CCF16F70015238C /* NotchSpaceManager.swift in Sources */,
 				14FC6E502C7DED5600C7BEA5 /* DataTypes+Extensions.swift in Sources */,
 				1153BD982D9881F900979FB0 /* AppleScriptHelper.swift in Sources */,
+				A1B2C3D4E5F6010203040501 /* AgentBridgeClient.swift in Sources */,
+				A1B2C3D4E5F6010203040502 /* AgentHubManager.swift in Sources */,
+				A1B2C3D4E5F6010203040503 /* AgentJumpService.swift in Sources */,
+				A1B2C3D4E5F6010203040504 /* AgentModels.swift in Sources */,
+				A1B2C3D4E5F6010203040505 /* AgentProviderScanner.swift in Sources */,
+				A1B2C3D4E5F6010203040506 /* AgentSessionCardView.swift in Sources */,
+				A1B2C3D4E5F6010203040507 /* AgentClosedSummaryView.swift in Sources */,
+				A1B2C3D4E5F601020304050B /* AgentSessionRowView.swift in Sources */,
+				A1B2C3D4E5F6010203040508 /* AgentsTabView.swift in Sources */,
+				A1B2C3D4E5F601020304050A /* AgentHookInstaller.swift in Sources */,
 				11CFC6612E097F6800748C80 /* PermissionsRequestView.swift in Sources */,
 				14D570D22C5F6C6A0011E668 /* BoringExtrasMenu.swift in Sources */,
 				11D58EA22E760AE100FA8377 /* ImageService.swift in Sources */,

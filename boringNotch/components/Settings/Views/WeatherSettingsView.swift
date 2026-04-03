@@ -6,6 +6,7 @@
 //
 
 import Defaults
+import Foundation
 import SwiftUI
 
 struct WeatherSettings: View {
@@ -20,10 +21,10 @@ struct WeatherSettings: View {
         Form {
             Section {
                 Defaults.Toggle(key: .showWeather) {
-                    Text("Show weather")
+                    Text("settings.weather.toggle.show_weather")
                 }
                 if showWeather {
-                    TextField("City (supports lowercase pinyin)", text: $weatherCity)
+                    TextField("settings.weather.field.city", text: $weatherCity)
                         .onSubmit {
                             weatherManager.refreshForEnteredCity()
                         }
@@ -32,13 +33,13 @@ struct WeatherSettings: View {
                         HStack(spacing: 8) {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Searching cities...")
+                            Text("settings.weather.state.searching_cities")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
                     } else if !weatherManager.citySuggestions.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("City suggestions")
+                            Text("settings.weather.section.city_suggestions")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             ForEach(Array(weatherManager.citySuggestions.prefix(8))) { suggestion in
@@ -66,34 +67,43 @@ struct WeatherSettings: View {
                         }
                     }
 
-                    Picker("Temperature unit", selection: $weatherUnit) {
+                    Picker("settings.weather.picker.temperature_unit", selection: $weatherUnit) {
                         ForEach(WeatherTemperatureUnit.allCases, id: \.self) { unit in
-                            Text(unit.displayName).tag(unit)
+                            Text(weatherUnitLabel(for: unit)).tag(unit)
                         }
                     }
 
-                    Picker("Weather content", selection: $weatherContentPreference) {
-                        Text("Current weather only")
+                    Picker("settings.weather.picker.weather_content", selection: $weatherContentPreference) {
+                        Text("settings.weather.option.current_weather_only")
                             .tag(WeatherContentPreference.currentOnly)
-                        Text("Current and forecast")
+                        Text("settings.weather.option.current_and_forecast")
                             .tag(WeatherContentPreference.currentAndForecast)
                     }
                     .pickerStyle(.segmented)
 
                     Stepper(value: $weatherRefreshMinutes, in: 5...120, step: 5) {
                         HStack {
-                            Text("Weather refresh interval")
+                            Text("settings.weather.label.weather_refresh_interval")
                             Spacer()
-                            Text("\(weatherRefreshMinutes) min")
+                            Text(String(format: String(localized: "settings.weather.value.weather_refresh_minutes_format"), locale: .current, arguments: [weatherRefreshMinutes]))
                                 .foregroundStyle(.secondary)
                         }
                     }
                 }
             } header: {
-                Text("General")
+                Text("settings.weather.section.general")
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Weather")
+        .navigationTitle("settings.sidebar.weather")
+    }
+
+    private func weatherUnitLabel(for unit: WeatherTemperatureUnit) -> LocalizedStringKey {
+        switch unit {
+        case .celsius:
+            return "settings.weather.unit.celsius"
+        case .fahrenheit:
+            return "settings.weather.unit.fahrenheit"
+        }
     }
 }

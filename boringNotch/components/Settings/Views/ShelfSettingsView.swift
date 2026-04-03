@@ -6,6 +6,7 @@
 //
 
 import Defaults
+import Foundation
 import SwiftUI
 
 struct Shelf: View {
@@ -23,13 +24,13 @@ struct Shelf: View {
         Form {
             Section {
                 Defaults.Toggle(key: .boringShelf) {
-                    Text("Enable shelf")
+                    Text("settings.shelf.toggle.enable_shelf")
                 }
                 Defaults.Toggle(key: .openShelfByDefault) {
-                    Text("Open shelf by default if items are present")
+                    Text("settings.shelf.toggle.open_shelf_by_default_if_items_are_present")
                 }
                 Defaults.Toggle(key: .expandedDragDetection) {
-                    Text("Expanded drag detection area")
+                    Text("settings.shelf.toggle.expanded_drag_detection_area")
                 }
                 .onChange(of: expandedDragDetection) {
                     NotificationCenter.default.post(
@@ -38,20 +39,20 @@ struct Shelf: View {
                     )
                 }
                 Defaults.Toggle(key: .copyOnDrag) {
-                    Text("Copy items on drag")
+                    Text("settings.shelf.toggle.copy_items_on_drag")
                 }
                 Defaults.Toggle(key: .autoRemoveShelfItems) {
-                    Text("Remove from shelf after dragging")
+                    Text("settings.shelf.toggle.remove_from_shelf_after_dragging")
                 }
 
             } header: {
                 HStack {
-                    Text("General")
+                    Text("settings.shelf.section.general")
                 }
             }
             
             Section {
-                Picker("Quick Share Service", selection: $quickShareProvider) {
+                Picker("settings.shelf.picker.quick_share_service", selection: $quickShareProvider) {
                     ForEach(quickShareService.availableProviders, id: \.id) { provider in
                         HStack {
                             Group {
@@ -86,10 +87,10 @@ struct Shelf: View {
                         .frame(width: 16, height: 16)
                         .foregroundColor(.accentColor)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Currently selected: \(selectedProvider.id)")
+                            Text(String(format: String(localized: "settings.shelf.label.currently_selected_format"), locale: .current, arguments: [selectedProvider.id]))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
-                            Text("Files dropped on the shelf will be shared via this service")
+                            Text("settings.shelf.helper.files_shared_via_this_service")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -99,15 +100,15 @@ struct Shelf: View {
                 
             } header: {
                 HStack {
-                    Text("Quick Share")
+                    Text("settings.shelf.section.quick_share")
                 }
             } footer: {
-                Text("Choose which service to use when sharing files from the shelf. Click the shelf button to select files, or drag files onto it to share immediately.")
+                Text("settings.shelf.footer.choose_service")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("Shelf")
+        .navigationTitle("settings.sidebar.shelf")
     }
 }

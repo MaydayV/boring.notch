@@ -6,6 +6,7 @@
 //
 
 import Defaults
+import Foundation
 import LaunchAtLogin
 import SwiftUI
 
@@ -38,20 +39,20 @@ struct GeneralSettings: View {
                     get: { Defaults[.menubarIcon] },
                     set: { Defaults[.menubarIcon] = $0 }
                 )) {
-                    Text("Show menu bar icon")
+                    Text("settings.general.toggle.show_menu_bar_icon")
                 }
                 .tint(.effectiveAccent)
                 LaunchAtLogin.Toggle() {
-                    Text("Launch at login")
+                    Text("settings.general.toggle.launch_at_login")
                 }
                 Defaults.Toggle(key: .showOnAllDisplays) {
-                    Text("Show on all displays")
+                    Text("settings.general.toggle.show_on_all_displays")
                 }
                 .onChange(of: showOnAllDisplays) {
                     NotificationCenter.default.post(
                         name: Notification.Name.showOnAllDisplaysChanged, object: nil)
                 }
-                Picker("Preferred display", selection: $coordinator.preferredScreenUUID) {
+                Picker("settings.general.picker.preferred_display", selection: $coordinator.preferredScreenUUID) {
                     ForEach(screens, id: \.uuid) { screen in
                         Text(screen.name).tag(screen.uuid as String?)
                     }
@@ -65,7 +66,7 @@ struct GeneralSettings: View {
                 .disabled(showOnAllDisplays)
                 
                 Defaults.Toggle(key: .automaticallySwitchDisplay) {
-                    Text("Automatically switch displays")
+                    Text("settings.general.toggle.automatically_switch_displays")
                 }
                     .onChange(of: automaticallySwitchDisplay) {
                         NotificationCenter.default.post(
@@ -73,20 +74,20 @@ struct GeneralSettings: View {
                     }
                     .disabled(showOnAllDisplays)
             } header: {
-                Text("System features")
+                Text("settings.general.section.system_features")
             }
 
             Section {
                 Picker(
                     selection: $notchHeightMode,
                     label:
-                        Text("Notch height on notch displays")
+                        Text("settings.general.label.notch_height_on_notch_displays")
                 ) {
-                    Text("Match real notch height")
+                    Text("settings.general.option.match_real_notch_height")
                         .tag(WindowHeightMode.matchRealNotchSize)
-                    Text("Match menu bar height")
+                    Text("settings.general.option.match_menu_bar_height")
                         .tag(WindowHeightMode.matchMenuBar)
-                    Text("Custom height")
+                    Text("settings.general.option.custom_height")
                         .tag(WindowHeightMode.custom)
                 }
                 .onChange(of: notchHeightMode) {
@@ -104,17 +105,19 @@ struct GeneralSettings: View {
                 }
                 if notchHeightMode == .custom {
                     Slider(value: $notchHeight, in: 15...45, step: 1) {
-                        Text("Custom notch size - \(notchHeight, specifier: "%.0f")")
+                        Text(
+                            String(format: String(localized: "settings.general.label.custom_notch_size_format"), locale: .current, arguments: [Int(notchHeight)])
+                        )
                     }
                     .onChange(of: notchHeight) {
                         NotificationCenter.default.post(
                             name: Notification.Name.notchHeightChanged, object: nil)
                     }
                 }
-                Picker("Notch height on non-notch displays", selection: $nonNotchHeightMode) {
-                    Text("Match menubar height")
+                Picker("settings.general.label.notch_height_on_non_notch_displays", selection: $nonNotchHeightMode) {
+                    Text("settings.general.option.match_menubar_height")
                         .tag(WindowHeightMode.matchMenuBar)
-                    Text("Custom height")
+                    Text("settings.general.option.custom_height")
                         .tag(WindowHeightMode.custom)
                 }
                 .onChange(of: nonNotchHeightMode) {
@@ -144,11 +147,13 @@ struct GeneralSettings: View {
                     )
                     
                     Slider(value: sliderValue, in: 0...26, step: 1) {
-                        Text("Custom notch size - \(nonNotchHeight, specifier: "%.0f")")
+                        Text(
+                            String(format: String(localized: "settings.general.label.custom_notch_size_format"), locale: .current, arguments: [Int(nonNotchHeight)])
+                        )
                     }
                 }
             } header: {
-                Text("Notch sizing")
+                Text("settings.general.section.notch_sizing")
             }
 
             NotchBehaviour()
@@ -156,13 +161,13 @@ struct GeneralSettings: View {
             gestureControls()
         }
         .toolbar {
-            Button("Quit app") {
+            Button("settings.general.button.quit_app") {
                 NSApp.terminate(self)
             }
             .controlSize(.extraLarge)
         }
         .accentColor(.effectiveAccent)
-        .navigationTitle("General")
+        .navigationTitle("settings.sidebar.general")
         .onChange(of: openNotchOnHover) {
             if !openNotchOnHover {
                 enableGestures = true
@@ -174,22 +179,22 @@ struct GeneralSettings: View {
     func gestureControls() -> some View {
         Section {
             Defaults.Toggle(key: .enableGestures) {
-                Text("Enable gestures")
+                Text("settings.general.toggle.enable_gestures")
             }
                 .disabled(!openNotchOnHover)
             if enableGestures {
-                Toggle("Change media with horizontal gestures", isOn: .constant(false))
+                Toggle("settings.general.toggle.change_media_with_horizontal_gestures", isOn: .constant(false))
                     .disabled(true)
                 Defaults.Toggle(key: .closeGestureEnabled) {
-                    Text("Close gesture")
+                    Text("settings.general.toggle.close_gesture")
                 }
                 Slider(value: $gestureSensitivity, in: 100...300, step: 100) {
                     HStack {
-                        Text("Gesture sensitivity")
+                        Text("settings.general.label.gesture_sensitivity")
                         Spacer()
                         Text(
                             Defaults[.gestureSensitivity] == 100
-                                ? "High" : Defaults[.gestureSensitivity] == 200 ? "Medium" : "Low"
+                                ? "settings.general.value.high" : Defaults[.gestureSensitivity] == 200 ? "settings.general.value.medium" : "settings.general.value.low"
                         )
                         .foregroundStyle(.secondary)
                     }
@@ -197,12 +202,12 @@ struct GeneralSettings: View {
             }
         } header: {
             HStack {
-                Text("Gesture control")
-                customBadge(text: "Beta")
+                Text("settings.general.section.gesture_control")
+                customBadge(text: "settings.common.beta")
             }
         } footer: {
             Text(
-                "Two-finger swipe up on notch to close, two-finger swipe down on notch to open when **Open notch on hover** option is disabled"
+                "settings.general.footer.gesture_controls"
             )
             .multilineTextAlignment(.trailing)
             .foregroundStyle(.secondary)
@@ -214,16 +219,16 @@ struct GeneralSettings: View {
     func NotchBehaviour() -> some View {
         Section {
             Defaults.Toggle(key: .openNotchOnHover) {
-                Text("Open notch on hover")
+                Text("settings.general.toggle.open_notch_on_hover")
             }
             Defaults.Toggle(key: .enableHaptics) {
-                    Text("Enable haptic feedback")
+                    Text("settings.general.toggle.enable_haptic_feedback")
             }
-            Toggle("Remember last tab", isOn: $coordinator.openLastTabByDefault)
+            Toggle("settings.general.toggle.remember_last_tab", isOn: $coordinator.openLastTabByDefault)
             if openNotchOnHover {
                 Slider(value: $minimumHoverDuration, in: 0...1, step: 0.1) {
                     HStack {
-                        Text("Hover delay")
+                        Text("settings.general.label.hover_delay")
                         Spacer()
                         Text("\(minimumHoverDuration, specifier: "%.1f")s")
                             .foregroundStyle(.secondary)
@@ -234,11 +239,11 @@ struct GeneralSettings: View {
                         name: Notification.Name.notchHeightChanged, object: nil)
                 }
             }
-            Toggle("Notch animation", isOn: $enableOpeningAnimation)
+            Toggle("settings.general.toggle.notch_animation", isOn: $enableOpeningAnimation)
             if enableOpeningAnimation {
                 Slider(value: $animationSpeedMultiplier, in: 0.1...2.01, step: 0.1) {
                     HStack {
-                        Text("Animation speed")
+                        Text("settings.general.label.animation_speed")
                         Spacer()
                         Text("\(animationSpeedMultiplier, specifier: "%.1f")x")
                             .foregroundStyle(.secondary)
@@ -246,7 +251,7 @@ struct GeneralSettings: View {
                 }
             }
         } header: {
-            Text("Notch behavior")
+            Text("settings.general.section.notch_behavior")
         }
     }
 }

@@ -1,0 +1,63 @@
+scope,key,english,chinese_suggested
+weather_existing_key,weather_tab.off.title,Weather is off,天气已关闭
+weather_existing_key,weather_tab.off.message,Turn on Show weather in Settings > Weather.,请在“设置 > 天气”中开启“显示天气”。
+weather_existing_key,weather_tab.loading,Loading weather...,正在加载天气...
+weather_existing_key,weather_tab.retry,Retry,重试
+weather_existing_key,weather_tab.unavailable,Weather not available,暂无天气数据
+weather_existing_key,weather_tab.segment.current,Current,当前
+weather_existing_key,weather_tab.segment.forecast,Forecast,预报
+weather_existing_key,weather_tab.no_forecast,No forecast data,暂无预报数据
+weather_existing_key,weather_tab.cached_badge,Cached,缓存
+weather_existing_key,weather_tab.metric.feels,Feels,体感
+weather_existing_key,weather_tab.metric.humidity,Humidity,湿度
+weather_existing_key,weather_tab.metric.wind,Wind,风速
+weather_existing_key,weather_tab.metric.rain,Rain,降雨
+weather_existing_key,weather_tab.no_hourly,No hourly forecast,暂无逐小时预报
+weather_existing_key,weather_tab.current_city_format,Current city: %@,当前城市：%@
+weather_existing_key,weather_tab.next_days_format,Next %d days,未来 %d 天
+weather_existing_key,weather_tab.rain_value_format,Rain %d%%,降雨 %d%%
+weather_existing_key,weather_tab.updated_format,Updated %@,更新于 %@
+weather_existing_key,weather_tab.high_low_format,L %d°  H %d°,低 %d°  高 %d°
+weather_existing_key,weather_relative_now,Now,现在
+weather_existing_key,weather_relative_today,Today,今天
+weather_existing_key,weather_relative_tomorrow,Tomorrow,明天
+weather_existing_key,weather_error_unavailable,Weather unavailable,天气服务不可用
+weather_existing_key,weather_error_location_not_found,Location not found,未找到该地点
+weather_existing_key,weather_relative_day_format,Day %d,第 %d 天
+weather_existing_key,weather_error_service_unavailable_format,Weather service unavailable (%d),天气服务不可用（%d）
+weather_existing_key,weather_condition_clear,Clear,晴朗
+weather_existing_key,weather_condition_mainly_clear,Mainly clear,基本晴朗
+weather_existing_key,weather_condition_partly_cloudy,Partly cloudy,局部多云
+weather_existing_key,weather_condition_cloudy,Cloudy,多云
+weather_existing_key,weather_condition_fog,Fog,雾
+weather_existing_key,weather_condition_drizzle,Drizzle,毛毛雨
+weather_existing_key,weather_condition_freezing_drizzle,Freezing drizzle,冻毛毛雨
+weather_existing_key,weather_condition_rain,Rain,雨
+weather_existing_key,weather_condition_freezing_rain,Freezing rain,冻雨
+weather_existing_key,weather_condition_snow,Snow,雪
+weather_existing_key,weather_condition_rain_showers,Rain showers,阵雨
+weather_existing_key,weather_condition_snow_showers,Snow showers,阵雪
+weather_existing_key,weather_condition_thunderstorm,Thunderstorm,雷暴
+weather_existing_key,weather_condition_thunderstorm_hail,Thunderstorm with hail,雷暴伴冰雹
+weather_existing_key,weather_condition_unknown,Unknown,未知
+settings_suggested_key,settings.tab.general,General,通用
+settings_suggested_key,settings.tab.appearance,Appearance,外观
+settings_suggested_key,settings.tab.media,Media,媒体
+settings_suggested_key,settings.tab.calendar,Calendar,日历
+settings_suggested_key,settings.tab.weather,Weather,天气
+settings_suggested_key,settings.tab.osd,OSD,OSD
+settings_suggested_key,settings.tab.battery,Battery,电池
+settings_suggested_key,settings.tab.shelf,Shelf,置物架
+settings_suggested_key,settings.tab.shortcuts,Shortcuts,快捷键
+settings_suggested_key,settings.tab.advanced,Advanced,高级
+settings_suggested_key,settings.tab.about,About,关于
+settings_suggested_key,settings.weather.show_weather,Show weather,显示天气
+settings_suggested_key,settings.weather.city_hint,City (supports lowercase pinyin),城市（支持小写拼音）
+settings_suggested_key,settings.weather.searching_cities,Searching cities...,正在搜索城市...
+settings_suggested_key,settings.weather.city_suggestions,City suggestions,城市建议
+settings_suggested_key,settings.weather.temperature_unit,Temperature unit,温度单位
+settings_suggested_key,settings.weather.content,Weather content,天气内容
+settings_suggested_key,settings.weather.content.current_only,Current weather only,仅当前天气
+settings_suggested_key,settings.weather.content.current_and_forecast,Current and forecast,当前+预报
+settings_suggested_key,settings.weather.refresh_interval,Weather refresh interval,天气刷新间隔
+settings_suggested_key,settings.weather.refresh_minutes_format,%d min,%d 分钟

@@ -7,6 +7,7 @@
 
 import Defaults
 import Sparkle
+import Foundation
 import SwiftUI
 
 struct About: View {
@@ -18,19 +19,19 @@ struct About: View {
             Form {
                 Section {
                     HStack {
-                        Text("Release name")
+                        Text("settings.about.label.release_name")
                         Spacer()
                         Text(Defaults[.releaseName])
                             .foregroundStyle(.secondary)
                     }
                     HStack {
-                        Text("Version")
+                        Text("settings.about.label.version")
                         Spacer()
                         if showBuildNumber {
                             Text("(\(Bundle.main.buildVersionNumber ?? ""))")
                                 .foregroundStyle(.secondary)
                         }
-                        Text(Bundle.main.releaseVersionNumber ?? "unkown")
+                        Text(Bundle.main.releaseVersionNumber ?? String(localized: "settings.about.value.unknown_version"))
                             .foregroundStyle(.secondary)
                     }
                     .onTapGesture {
@@ -39,7 +40,7 @@ struct About: View {
                         }
                     }
                 } header: {
-                    Text("Version info")
+                    Text("settings.about.section.version_info")
                 }
 
                 UpdaterSettingsView(updater: updaterController.updater)
@@ -56,7 +57,7 @@ struct About: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 18)
-                            Text("GitHub")
+                            Text("settings.about.button.github")
                         }
                         .contentShape(Rectangle())
                     }
@@ -66,7 +67,7 @@ struct About: View {
             }
             VStack(spacing: 0) {
                 Divider()
-                Text("Made with 🫶🏻 by not so boring not.people")
+                Text("settings.about.footer.made_with")
                     .foregroundStyle(.secondary)
                     .padding(.top, 5)
                     .padding(.bottom, 7)
@@ -78,6 +79,6 @@ struct About: View {
         .toolbar {
             CheckForUpdatesView(updater: updaterController.updater)
         }
-        .navigationTitle("About")
+        .navigationTitle("settings.sidebar.about")
     }
 }
