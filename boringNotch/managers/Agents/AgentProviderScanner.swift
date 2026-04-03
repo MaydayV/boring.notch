@@ -623,9 +623,6 @@ struct AgentProviderScanner: @unchecked Sendable {
             let fallbackDate = fileModificationDate(for: fileURL) ?? Date()
             let resolvedCreatedAt = createdAt ?? updatedAt ?? fallbackDate
             let resolvedUpdatedAt = updatedAt ?? resolvedCreatedAt
-            let freshnessWindow = max(activeSessionWindowThreshold(), 600)
-            let isRunning = Date().timeIntervalSince(resolvedUpdatedAt) <= freshnessWindow
-
             sessions.append(
                 AgentSessionMeta(
                     provider: .codex,
@@ -637,7 +634,10 @@ struct AgentProviderScanner: @unchecked Sendable {
                     lastActiveAt: resolvedUpdatedAt,
                     resumeCommand: AgentProvider.codex.resumeCommand(for: sessionId),
                     sourcePath: fileURL.path,
-                    state: isRunning ? .running : .idle,
+                    // SQLite threads are persisted history snapshots; do not infer
+                    // live execution state from recency alone. Real-time running
+                    // state should come from bridge events.
+                    state: .idle,
                     usage: nil,
                     pendingActionCount: 0,
                     subagent: nil,
