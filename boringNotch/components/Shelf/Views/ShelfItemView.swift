@@ -18,7 +18,6 @@ struct ShelfItemView: View {
     @StateObject private var viewModel: ShelfItemViewModel
     @EnvironmentObject private var quickLookService: QuickLookService
     @State private var showStack = false
-    @State private var cachedPreviewImage: NSImage?
     @State private var debouncedDropTarget = false
 
     private var isSelected: Bool { viewModel.isSelected }
@@ -47,7 +46,6 @@ struct ShelfItemView: View {
                 DraggableClickHandler(
                     item: item,
                     viewModel: viewModel,
-                    cachedPreviewImage: $cachedPreviewImage,
                     dragPreviewContent: {
                         DragPreviewView(thumbnail: viewModel.thumbnail ?? item.icon, displayName: item.displayName)
                     },
@@ -74,22 +72,11 @@ struct ShelfItemView: View {
         .onAppear {
             Task { 
                 await viewModel.loadThumbnail()
-                // Pre-render drag preview once on appear
-                if cachedPreviewImage == nil {
-                    cachedPreviewImage = await renderDragPreview()
-                }
             }
             viewModel.onQuickLookRequest = { urls in
                 quickLookService.show(urls: urls, selectFirst: true)
             }
         }
-        .onChange(of: viewModel.thumbnail) { _, _ in
-            // Invalidate cached preview when thumbnail changes
-            Task {
-                cachedPreviewImage = await renderDragPreview()
-            }
-        }
-        .quickLookPresenter(using: quickLookService)
     }
 
     // MARK: - View Components
@@ -154,25 +141,45 @@ struct ShelfItemView: View {
             return 1
         }
     }
-    
+
     // MARK: - Drag Preview Rendering
-    
+
     @MainActor
     private func renderDragPreview() async -> NSImage {
-        let content = DragPreviewView(thumbnail: viewModel.thumbnail ?? item.icon, displayName: item.displayName)
-        let renderer = ImageRenderer(content: content)
-        renderer.scale = NSScreen.main?.backingScaleFactor ?? 2.0
-        return renderer.nsImage ?? (viewModel.thumbnail ?? item.icon)
+        // Check if multiple items are selected
+        let selectedItems = selection.selectedItems(in: ShelfStateViewModel.shared.items)
+
+        if selectedItems.count > 1 && selectedItems.contains(where: { $0.id == item.id }) {
+            // Render stacked preview for multi-item drag
+            return renderStackedPreview(for: selectedItems)
+        } else {
+            // Render single item preview
+            let content = DragPreviewView(thumbnail: viewModel.thumbnail ?? item.icon, displayName: item.displayName)
+            let renderer = ImageRenderer(content: content)
+            renderer.scale = NSScreen.main?.backingScaleFactor ?? 2.0
+            return renderer.nsImage ?? (viewModel.thumbnail ?? item.icon)
+        }
     }
 
-    
+    @MainActor
+    private func renderStackedPreview(for items: [ShelfItem]) -> NSImage {
+        // Collect icons from selected items (max 3)
+        // We use icons instead of thumbnails for simplicity and performance
+        let thumbnails = items.prefix(3).map { $0.icon }
+
+        let content = StackedDragPreviewView(thumbnails: Array(thumbnails), count: items.count)
+        let renderer = ImageRenderer(content: content)
+        renderer.scale = NSScreen.main?.backingScaleFactor ?? 2.0
+        return renderer.nsImage ?? (thumbnails.first ?? item.icon)
+    }
+
+
 }
 
 // MARK: - Draggable Click Handler with NSDraggingSource
 private struct DraggableClickHandler<Content: View>: NSViewRepresentable {
     let item: ShelfItem
     let viewModel: ShelfItemViewModel
-    @Binding var cachedPreviewImage: NSImage?
     @ViewBuilder let dragPreviewContent: () -> Content
     let onRightClick: (NSEvent, NSView) -> Void
     let onClick: (NSEvent, NSView) -> Void
@@ -181,7 +188,9 @@ private struct DraggableClickHandler<Content: View>: NSViewRepresentable {
         let view = DraggableClickView()
         view.item = item
         view.viewModel = viewModel
-        view.dragPreviewImage = cachedPreviewImage ?? renderDragPreview()
+        view.getDragPreview = {
+            self.renderDragPreview()
+        }
         view.onRightClick = onRightClick
         view.onClick = onClick
         return view
@@ -190,23 +199,41 @@ private struct DraggableClickHandler<Content: View>: NSViewRepresentable {
     func updateNSView(_ nsView: DraggableClickView, context: Context) {
         nsView.item = item
         nsView.viewModel = viewModel
-        // Only update preview if cached version is available
-        if let cached = cachedPreviewImage {
-            nsView.dragPreviewImage = cached
+        // Update the closure to capture latest state if needed, though usually content closure is enough
+        nsView.getDragPreview = {
+            self.renderDragPreview()
         }
         nsView.onRightClick = onRightClick
         nsView.onClick = onClick
     }
     
     private func renderDragPreview() -> NSImage {
+        // Check if multiple items are selected
+        let selectedItems = ShelfSelectionModel.shared.selectedItems(in: ShelfStateViewModel.shared.items)
+
+        if selectedItems.count > 1 && selectedItems.contains(where: { $0.id == item.id }) {
+            // Render stacked preview for multi-item drag
+            // Use icons for simplicity and performance
+            let thumbnails = selectedItems.prefix(3).map { $0.icon }
+
+            let stackedContent = StackedDragPreviewView(thumbnails: Array(thumbnails), count: selectedItems.count)
+            let stackedRenderer = ImageRenderer(content: stackedContent)
+            stackedRenderer.scale = NSScreen.main?.backingScaleFactor ?? 2.0
+
+            if let nsImage = stackedRenderer.nsImage {
+                return nsImage
+            }
+        }
+
+        // Render single item preview
         let content = dragPreviewContent()
         let renderer = ImageRenderer(content: content)
         renderer.scale = NSScreen.main?.backingScaleFactor ?? 2.0
-        
+
         if let nsImage = renderer.nsImage {
             return nsImage
         }
-        
+
         // Fallback to icon if rendering fails
         return viewModel.thumbnail ?? item.icon
     }
@@ -214,7 +241,7 @@ private struct DraggableClickHandler<Content: View>: NSViewRepresentable {
     final class DraggableClickView: NSView, NSDraggingSource {
         var item: ShelfItem!
         weak var viewModel: ShelfItemViewModel?
-        var dragPreviewImage: NSImage?
+        var getDragPreview: (() -> NSImage)?
         var onRightClick: ((NSEvent, NSView) -> Void)?
         var onClick: ((NSEvent, NSView) -> Void)?
 
@@ -272,8 +299,8 @@ private struct DraggableClickHandler<Content: View>: NSViewRepresentable {
                 if let pasteboardItem = createPasteboardItem(for: dragItem) {
                     let draggingItem = NSDraggingItem(pasteboardWriter: pasteboardItem)
 
-                    // Use the drag preview image
-                    let image = dragPreviewImage ?? dragItem.icon
+                    // Use the drag preview image - generated on demand
+                    let image = getDragPreview?() ?? dragItem.icon
                     let imageFrame = NSRect(
                         x: 0,
                         y: 0,
